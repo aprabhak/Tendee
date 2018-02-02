@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Tendee</string>
+    <string name="need_a_new_account">NEED A NEW ACCOUNT ?</string>
+    <string name="log_out">Log Out</string>
+</resources>
