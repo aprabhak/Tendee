@@ -25,6 +25,8 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="105dp"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
         android:text="@string/need_a_new_account"
         android:textColor="@color/colorAccent" />
 
