@@ -78,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Intent mainIntent = new Intent(RegisterActivity.this,MainActivity.class);
+                                Intent mainIntent = new Intent(RegisterActivity.this,RegisterDetailActivity.class);
                                 mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(mainIntent);
                                 finish();
