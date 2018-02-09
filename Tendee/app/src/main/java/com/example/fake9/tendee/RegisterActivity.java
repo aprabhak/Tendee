@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = mEmail.getEditText().getText().toString();
                 //Toast.makeText(RegisterActivity.this, email, Toast.LENGTH_SHORT).show();
                 String password = mPassword.getEditText().getText().toString();
-                Toast.makeText(RegisterActivity.this, password, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(RegisterActivity.this, password, Toast.LENGTH_SHORT).show();
 
 
                 register_user(email,password);
@@ -69,6 +69,16 @@ public class RegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
+                    current_user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(RegisterActivity.this, "worked", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "error", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                     String uid = current_user.getUid();
                     mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid); //.getReference points to root.
                     HashMap<String,String> usermap = new HashMap<>();
