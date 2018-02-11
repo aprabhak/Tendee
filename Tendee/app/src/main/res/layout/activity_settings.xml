@@ -67,4 +67,15 @@
         android:layout_alignBottom="@+id/settings_address"
         android:layout_alignStart="@+id/settings_edit_description"
         android:drawableStart="@drawable/ic_mode_edit_white_18dp" />
+
+    <Button
+        android:id="@+id/EditPassBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="31dp"
+        android:backgroundTint="@color/colorAccent"
+        android:text="Change Password"
+        android:textColor="@android:color/black" />
 </RelativeLayout>
