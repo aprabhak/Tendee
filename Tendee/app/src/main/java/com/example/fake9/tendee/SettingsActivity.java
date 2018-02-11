@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -107,21 +109,43 @@ public class SettingsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         String currentPass = currentPassword.getText().toString();
-                        String newPass = newPassword.getText().toString();
+                        final String newPass = newPassword.getText().toString();
                         String newPass2 = newPassword2.getText().toString();
                         if (!newPass.equals(newPass2)) {
                             Toast.makeText(SettingsActivity.this, "new passwords do not match", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                             return;
                         }
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        user.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        /*user.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(SettingsActivity.this, "password updated", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(SettingsActivity.this, "failed", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });*/
+                        String email = user.getEmail();
+                        AuthCredential credential = EmailAuthProvider.getCredential(email,currentPass);
+                        user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    //Toast.makeText(SettingsActivity.this, "reauthenticated", Toast.LENGTH_SHORT).show();
+                                    user.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(SettingsActivity.this, "password changed", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(SettingsActivity.this, "failed", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    Toast.makeText(SettingsActivity.this, "current password is wrong", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
