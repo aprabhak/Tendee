@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -15,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private Toolbar mToolbar;
+    private Button mSchedule_btn;
+    private Button mSearch_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,24 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setTitle("Tendee");
         }
         getSupportActionBar().setTitle("Tendee");
+
+        mSchedule_btn = (Button)findViewById(R.id.appoint_btn);
+        mSearch_btn = (Button)findViewById(R.id.search_btn);
+
+        mSchedule_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myAppointmentsIntent = new Intent(MainActivity.this,MyAppointmentsActivity.class);
+                startActivity(myAppointmentsIntent);
+            }
+        });
+        mSearch_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent SearchIntent = new Intent(MainActivity.this,SearchActivity.class);
+                startActivity(SearchIntent);
+            }
+        });
     }
 
     @Override
