@@ -12,21 +12,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class SearchActivity extends AppCompatActivity {
+
+public class Search_ResultActivity extends AppCompatActivity {
     private Button mSearchBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.activity_search_result);
 
-        mSearchBtn = (Button) findViewById(R.id.Search_button);
-        mSearchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent reg_intent = new Intent(StartActivity.this, RegisterActivity.class);
-                startActivity(reg_intent);
-            }
-        });
     }
 }

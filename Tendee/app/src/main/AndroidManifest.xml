@@ -32,6 +32,7 @@
             android:parentActivityName=".SettingsActivity" />
         <activity android:name=".MyAppointmentsActivity" />
         <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".Search_ResultActivity"></activity>
     </application>
 
 </manifest>
