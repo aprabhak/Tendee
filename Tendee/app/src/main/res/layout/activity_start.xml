@@ -40,4 +40,5 @@
         android:backgroundTint="@color/colorAccent"
         android:text="ALREADY HAVE ACCOUNT"
         android:textColor="@android:color/white" />
+
 </RelativeLayout>

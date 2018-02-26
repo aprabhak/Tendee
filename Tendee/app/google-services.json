@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "674055631310-i0nc05a932j4faajmh947o5m6cm4ulhq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fake9.tendee",
+            "certificate_hash": "b318763f5ab7fc44265382bb3e200e87032ef6e7"
+          }
+        },
+        {
           "client_id": "674055631310-vaempga520mrqmqhmrrucsbu0u6pi2tr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
