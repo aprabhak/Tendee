@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +18,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class RegisterDetailActivity extends AppCompatActivity {
 
@@ -66,6 +71,22 @@ public class RegisterDetailActivity extends AppCompatActivity {
         usermap.put("name",name);
         usermap.put("description",description);
         usermap.put("address",address);
+        Map<String,ArrayList<Integer>> week = new HashMap<>();
+        week.put("Monday",new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)));
+        week.put("Tuesday",new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)));
+        week.put("Wednesday",new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)));
+        week.put("Thursday",new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)));
+        week.put("Friday",new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)));
+        //ArrayList<Integer> test = week.get("Monday");
+        //test.add(2,5);
+        //week.put("Monday",test);
+        //int i = test.get(2);
+        //Log.d("fdgfd","value " +i);
+        usermap.put("week",week);
+        int min = 1;
+        int max = 100000;
+        int randomNum = ThreadLocalRandom.current().nextInt(min,max+1);
+        usermap.put("Id",randomNum);
         mDatabase.updateChildren(usermap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
