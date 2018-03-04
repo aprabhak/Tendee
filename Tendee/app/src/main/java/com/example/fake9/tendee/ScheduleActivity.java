@@ -1,5 +1,6 @@
 package com.example.fake9.tendee;
 
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,8 +13,18 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class ScheduleActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -24,6 +35,14 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
     private Button busyBtn;
     private Button freeBtn;
     String day;
+    ArrayList<Integer> test;
+    ArrayList<Integer> newDay;
+    int startIndex = 0;
+    int endIndex = 0;
+    int intervals = 0;
+
+    private DatabaseReference mUserDatabase;
+    private FirebaseUser mCurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,20 +76,51 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                 int startMin = startTime.getCurrentMinute();
                 int endHour = endTime.getCurrentHour();
                 int endMin = endTime.getCurrentMinute();
-                int startIndex = 0;
-                int endIndex = 0;
-                Log.d("hour", "onClick: "+startHour);
-                Log.d("minute", "onClick: "+startMin);
-                if (startHour < 9 || startHour > 17) {
+                //Log.d("hour", "onClick: "+startHour);
+                //Log.d("minute", "onClick: "+startMin);
+                if (startHour < 9 || startHour > 17 || endHour < 9 || endHour > 17) {
                     Toast.makeText(ScheduleActivity.this, "invalid time", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (startHour > endHour) {
+                    Toast.makeText(ScheduleActivity.this, "impossible time", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 startIndex = (startHour - 9) * 2;
                 if (startMin >= 30) {
                     startIndex = startIndex + 1;
                 }
-                Log.d("startIndex", "onClick: "+startIndex);
+                //Log.d("startIndex", "onClick: "+startIndex);
+                endIndex = (endHour - 9) * 2;
+                if (endMin >= 30) {
+                    endIndex = endIndex + 1;
+                }
+                mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+                String current_uid = mCurrentUser.getUid();
+                mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid).child("week").child(day);
+                newDay = new ArrayList<Integer>();
+                mUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        newDay = ((ArrayList<Integer>)dataSnapshot.getValue());
+                        Log.d("newday", "onDataChange:"+newDay.toString());
+                        result();
+                        mUserDatabase.setValue(newDay);
 
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                //SystemClock.sleep(1000);
+                Log.d("after","value " +newDay.toString());
+                intervals = endIndex - startIndex;
+                for (int i = startIndex; i < endIndex; i++) {
+                    Log.d("indexes", "onClick: "+i);
+                }
             }
         });
     }
@@ -84,5 +134,14 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    public void result() {
+        Log.d("method","value " +newDay.toString());
+        for (int i = startIndex; i < endIndex; i++) {
+            //Log.d("indexes", "onClick: "+i);
+            newDay.set(i,1);
+        }
+        Log.d("added","newvalue " +newDay.toString());
     }
 }
