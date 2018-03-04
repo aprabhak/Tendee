@@ -62,7 +62,77 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
+    public boolean containsBadWords(String str)
+    {
+        String word = str.toLowerCase();
+        if (word.contains("bitch") || word.contains("asshole") || word.contains("son of a bitch") || word.contains("shit hole") || word.contains("mother fucker") || word.contains("fucker") || word.contains("fuck") || word.contains("mother") || word.contains("god") || word.contains("ass") || word.contains("dick") || word.contains("suck"))
+            return true;
+        return false;
+    }
 
+    public boolean validEmail(String str)
+    {
+        if (!str.contains("@"))
+            return false;
+        String email = str.toLowerCase();
+        if (email.split("@").length < 2)
+            return false;
+        if (email.split("@")[0].length() == 0 || email.split("@")[1].length() == 0)
+            return false;
+        if (email.length() < 6)
+            return false;
+        if (email.length() > 20)
+            return false;
+        if (containsBadWords(email))
+            return false;
+        if (!email.contains(".com"))
+            return false;
+        return true;
+    }
+
+    public boolean validAddress(String str)
+    {
+        String address = str.toLowerCase();
+        if (address.length() < 10 || address.length() > 30)
+            return false;
+        if (containsBadWords(address))
+            return false;
+        if (address.contains("#") || address.contains("&") || address.contains("!")  || address.contains("$") || address.contains("%") || address.contains("^"))
+            return false;
+        if (!address.contains("dr"))
+            return false;
+        return true;
+    }
+    public boolean passwordAppropriate(String password)
+    {
+        if (password.length() > 20 || password.length() < 7)
+            return false;
+
+        int alphanumeric = 0;
+        int number = 0;
+        int other = 0;
+        char c;
+        for (int i = 0; i < password.length(); i++) {
+            c = password.charAt(i);
+            if ( 0 <= (c - '0') && (c - '0') <= 9)
+                number++;
+
+            if ( 'a' <= (c) && (c) <= 'z')
+                alphanumeric++;
+            if ( 'A' <= (c) && (c) <= 'Z')
+                alphanumeric++;
+            if ( c == '@' || c == '#' || c == '$' || c == '*')
+                other++;
+
+        }
+        if (number < 3)
+            return false;
+        if ( alphanumeric == 0)
+            return false;
+        if (other == 0)
+            return false;
+        return true;
+    }
     private void register_user(final String email, String password) {
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

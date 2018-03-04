@@ -62,7 +62,45 @@ public class RegisterDetailActivity extends AppCompatActivity {
         });
 
     }
+    public boolean validName(String name)
+    {
+        if (name.length() < 5)
+            return false;
+        if (!(name.charAt(0) <= 'Z' && name.charAt(0) >= 'A'))
+            return false;
 
+        if (name.split(" ").length < 2)
+            return false;
+
+
+        if (name.contains("#") || name.contains("&") || name.contains("!")  || name.contains("$") || name.contains("%") || name.contains("^"))
+            return false;
+
+        return true;
+    }
+
+    public boolean containsBadWords(String str)
+    {
+        String word = str.toLowerCase();
+        if (word.contains("bitch") || word.contains("asshole") || word.contains("son of a bitch") || word.contains("shit hole") || word.contains("mother fucker") || word.contains("fucker") || word.contains("fuck") || word.contains("mother") || word.contains("god") || word.contains("ass") || word.contains("dick") || word.contains("suck"))
+            return true;
+        return false;
+    }
+
+    public boolean validDescription(String str)
+    {
+        String string = str.toLowerCase();
+        if (string.length() < 4)
+            return false;
+        if (string.length() > 50)
+            return false;
+        if (containsBadWords(string))
+            return false;
+
+        if (string.contains("#") || string.contains("&")  || string.contains("$") || string.contains("%") || string.contains("^"))
+            return false;
+        return true;
+    }
     private void add_detail_to_user(String name, String description, String address) {
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = current_user.getUid();
