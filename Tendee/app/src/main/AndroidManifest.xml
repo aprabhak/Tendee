@@ -38,7 +38,10 @@
             android:name=".ScheduleActivity"
             android:parentActivityName=".MyAppointmentsActivity" />
         <activity android:name=".Search_ResultActivity" />
-        <activity android:name=".Make_AppointmentActivity"></activity>
+        <activity android:name=".Make_AppointmentActivity" />
+        <activity
+            android:name=".DayAppointmentsActivity"
+            android:parentActivityName=".MyAppointmentsActivity"></activity>
     </application>
 
 </manifest>

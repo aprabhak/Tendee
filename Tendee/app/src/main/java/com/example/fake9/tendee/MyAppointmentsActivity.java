@@ -49,7 +49,10 @@ public class MyAppointmentsActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String result = String.valueOf(adapterView.getItemAtPosition(i));
-                        Toast.makeText(MyAppointmentsActivity.this, result, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MyAppointmentsActivity.this, result, Toast.LENGTH_SHORT).show();
+                        Intent dayIntent = new Intent(MyAppointmentsActivity.this,DayAppointmentsActivity.class);
+                        dayIntent.putExtra("day",result);
+                        startActivity(dayIntent);
                     }
                 }
         );
