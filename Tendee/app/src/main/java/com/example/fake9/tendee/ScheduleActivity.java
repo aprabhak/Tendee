@@ -137,7 +137,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
 
     public void result() {
         Log.d("method","value " +newDay.toString());
-        for (int i = startIndex; i < endIndex; i++) {
+        for (int i = startIndex; i <= endIndex; i++) {
             //Log.d("indexes", "onClick: "+i);
             newDay.set(i,1L);
         }

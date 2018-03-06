@@ -68,7 +68,7 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                         //Log.d("checkone", "onDataChange: ");
                         startIndexes.add(i);
                         k = i;
-                        while (daySchedule.get(k) == 1L) {
+                        while (k <= 15 && daySchedule.get(k) == 1L) {
                             k = k + 1;
                         }
                         endIndexes.add(k-1);
