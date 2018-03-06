@@ -35,8 +35,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
     private Button busyBtn;
     private Button freeBtn;
     String day;
-    ArrayList<Integer> test;
-    ArrayList<Integer> newDay;
+    ArrayList<Long> newDay;
     int startIndex = 0;
     int endIndex = 0;
     int intervals = 0;
@@ -98,11 +97,11 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                 mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
                 String current_uid = mCurrentUser.getUid();
                 mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid).child("week").child(day);
-                newDay = new ArrayList<Integer>();
+                newDay = new ArrayList<Long>();
                 mUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        newDay = ((ArrayList<Integer>)dataSnapshot.getValue());
+                        newDay = ((ArrayList<Long>)dataSnapshot.getValue());
                         Log.d("newday", "onDataChange:"+newDay.toString());
                         result();
                         mUserDatabase.setValue(newDay);
@@ -140,7 +139,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         Log.d("method","value " +newDay.toString());
         for (int i = startIndex; i < endIndex; i++) {
             //Log.d("indexes", "onClick: "+i);
-            newDay.set(i,1);
+            newDay.set(i,1L);
         }
         Log.d("added","newvalue " +newDay.toString());
     }

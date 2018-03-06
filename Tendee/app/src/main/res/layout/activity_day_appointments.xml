@@ -8,8 +8,26 @@
 
     <include
         android:id="@+id/day_appt_toolbar"
-        layout="@layout/app_bar_layout"/>
+        layout="@layout/app_bar_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
+    <ListView
+        android:id="@+id/dayIntervals"
+        android:layout_width="368dp"
+        android:layout_height="494dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/day_appt_toolbar"
+        app:layout_constraintVertical_bias="0.769" />
 
 
 </android.support.constraint.ConstraintLayout>

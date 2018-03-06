@@ -109,12 +109,12 @@ public class RegisterDetailActivity extends AppCompatActivity {
         usermap.put("name",name);
         usermap.put("description",description);
         usermap.put("address",address);
-        Map<String,ArrayList<Integer>> week = new HashMap<>();
-        week.put("Monday",new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)));
-        week.put("Tuesday",new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)));
-        week.put("Wednesday",new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)));
-        week.put("Thursday",new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)));
-        week.put("Friday",new ArrayList<Integer>(Arrays.asList(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)));
+        Map<String,ArrayList<Long>> week = new HashMap<>();
+        week.put("Monday",new ArrayList<Long>(Arrays.asList(0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L)));
+        week.put("Tuesday",new ArrayList<Long>(Arrays.asList(0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L)));
+        week.put("Wednesday",new ArrayList<Long>(Arrays.asList(0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L)));
+        week.put("Thursday",new ArrayList<Long>(Arrays.asList(0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L)));
+        week.put("Friday",new ArrayList<Long>(Arrays.asList(0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L,0L)));
         //ArrayList<Integer> test = week.get("Monday");
         //test.add(2,5);
         //week.put("Monday",test);
