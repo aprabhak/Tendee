@@ -27,13 +27,11 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
 
         // Spinner Drop down elements
         List<String> week = new ArrayList<String>();
-        week.add("Sunday");
         week.add("Monday");
         week.add("Tuesday");
         week.add("Wednesday");
         week.add("Thursday");
         week.add("Friday");
-        week.add("Saturday");
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
