@@ -2,6 +2,7 @@ package com.example.fake9.tendee;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -95,15 +97,48 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
             public void onClick(View view) {
                 //   String name = mSearchName.getEditText().getText().toString();
 
+
+                mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+                final String current_uid = mCurrentUser.getUid();
+                mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
+                mUserDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) { //executes when data retrieved.
+                        //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
+
+                        String index = parseTime(app_time);
+                        if (Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString()) != 0 &&
+                                Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString()) != 1) {
+
+                            Toast.makeText(Make_AppointmentActivity.this, "You are not free at this time!!" , Toast.LENGTH_SHORT).show();
+
+//                            SystemClock.sleep(2000);
+
+                            Intent intent = new Intent(Make_AppointmentActivity.this, MainActivity.class);
+                            startActivity(intent);
+
+                            finish();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
                 Intent intent = new Intent(Make_AppointmentActivity.this, Add_attendeeActivity.class);
 
                 intent.putExtra("App_Date", date);
 
                 intent.putExtra("app_Time", app_time);
 
-                intent.putExtra("TARGET_NAME",target_user_name);
+                intent.putExtra("TARGET_NAME", target_user_name);
 
-                Toast.makeText(Make_AppointmentActivity.this, "time is"+app_time+"date is ~"+date, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Make_AppointmentActivity.this, "time is" + app_time + "date is ~" + date, Toast.LENGTH_SHORT).show();
                 startActivity(intent);
 
             }
@@ -111,7 +146,6 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
 
 
     }
-
 
 
     @Override
@@ -125,7 +159,7 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
         Spinner spinner = (Spinner) adapterView;
         if (spinner.getId() == R.id.week_spinner) {
             if (week.contains(item)) {
-                date=item;
+                date = item;
                 target_user_name = getIntent().getStringExtra("target_user_name");
                 Query query = mUserDatabase.orderByChild("name").equalTo(target_user_name);//ok
 
@@ -178,7 +212,7 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
 
             }
         } else if (spinner.getId() == R.id.time_spinner) {
-            app_time=item;
+            app_time = item;
 //            Toast.makeText(Make_AppointmentActivity.this, "item is" + item, Toast.LENGTH_SHORT).show();
         }
 
@@ -191,6 +225,16 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
         // TODO Auto-generated method stub
     }
 
+    public String parseTime(String time) {
+        String res[];
+        res = time.split(":");
+        int index = 0;
+        if (Integer.parseInt(res[1]) == 30) {
+            index++;
+        }
+        index += (Integer.parseInt(res[0]) - 8) * 2;
+        return index + "";
+    }
 
 //    @Override
 //    public void onSaveInstanceState(Bundle savedInstanceState) {

@@ -53,7 +53,7 @@ public class Add_attendeeActivity extends AppCompatActivity {
     public void setTarget(String name){
 
         Add_attendeeActivity.app.target_name = name;
-        Toast.makeText(Add_attendeeActivity.this, "what we have----"+name, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(Add_attendeeActivity.this, "what we have----"+name, Toast.LENGTH_SHORT).show();
 
     }
 

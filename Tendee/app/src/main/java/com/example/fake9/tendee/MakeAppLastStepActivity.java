@@ -57,7 +57,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
     public String app_time = "empty";
     public String reason;
     public String phone;
-
+    final int randomNum = (int) ((Math.random() * ((900000000 - 100000000) + 1)) + 100000000);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,21 +86,23 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) { //executes when data retrieved.
                 //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
-                self_name = dataSnapshot.child("name").getValue().toString();
                 String index = parseTime(app_time);
-      /**          if(Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString())!=0 &&
-                        Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString())!=1){
+                self_name = dataSnapshot.child("name").getValue().toString();
+//                dataSnapshot.child("week").child(date).child(index).getRef().setValue(randomNum);
 
-                    Toast.makeText(MakeAppLastStepActivity.this, "You are not free bro"+
-                            Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString()), Toast.LENGTH_SHORT).show();
+                /**          if(Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString())!=0 &&
+                 Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString())!=1){
 
-                    SystemClock.sleep(1000);
+                 Toast.makeText(MakeAppLastStepActivity.this, "You are not free bro"+
+                 Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString()), Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(MakeAppLastStepActivity.this, MainActivity.class);
-                    startActivity(intent);
+                 SystemClock.sleep(1000);
 
-                    finish();
-                }*/
+                 Intent intent = new Intent(MakeAppLastStepActivity.this, MainActivity.class);
+                 startActivity(intent);
+
+                 finish();
+                 }*/
 
                 attendee_list = other_attendee_name + ", " + self_name;
                 display_attendee.setText(attendee_list);
@@ -156,77 +158,98 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
 //                });
 
                 final String index = parseTime(app_time);
-                final int randomNum = (int) ((Math.random() * ((900000000 - 100000000) + 1)) + 100000000);
-                mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid).child("week").child(date).child(index);
 
 
-
-
-
-                    mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            for (DataSnapshot data : dataSnapshot.getChildren()) {
+                mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
 //                                    Toast.makeText(MakeAppLastStepActivity.this,"i am in"+data.child("name").getValue(),Toast.LENGTH_SHORT).show();
 
-                                if (data.child("name").getValue().equals(other_attendee_name)) {
-                                    //do ur stuff
-                                    Toast.makeText(MakeAppLastStepActivity.this, "i am in" + date, Toast.LENGTH_SHORT).show();
+                            if (data.child("name").getValue().equals(other_attendee_name)) {
+                                //do ur stuff
+//                                Toast.makeText(MakeAppLastStepActivity.this, "i am in" + date, Toast.LENGTH_SHORT).show();
 
-                                    DataSnapshot a = data.child("week").child(date).child(index);
-                                    if (Integer.parseInt(a.getValue().toString()) == 1 || Integer.parseInt(a.getValue().toString()) == 0) {
-                                        a.getRef().setValue(randomNum);
-                                        mUserDatabase= mUserDatabase.child("week").child(date).child(index);
-                                      //  mUserDatabase.setValue(randomNum);
+                                DataSnapshot a = data.child("week").child(date).child(index);
+                                if (Integer.parseInt(a.getValue().toString()) == 1 || Integer.parseInt(a.getValue().toString()) == 0) {
+                                    a.getRef().setValue(randomNum);
 
 
-                                        mDatabase = FirebaseDatabase.getInstance().getReference().child("Appointments").child(randomNum + "");
+                                    mUserDatabase.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) { //executes when data retrieved.
+                                            //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
+                                            String index = parseTime(app_time);
+                                            dataSnapshot.child("week").child(date).child(index).getRef().setValue(randomNum);
 
-                                        HashMap<String, Object> app_map = new HashMap<>();
-                                        app_map.put("targetName", target_name);
-                                        app_map.put("reason", reason);
-                                        app_map.put("phone", phone);
-                                        app_map.put("date", date);
-                                        app_map.put("time", app_time);
-                                        app_map.put("selfAttendee", self_name);
-                                        app_map.put("otherAttendee", other_attendee_name);
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
 
 
-                                        mDatabase.updateChildren(app_map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
+                                    mDatabase = FirebaseDatabase.getInstance().getReference().child("Appointments").child(randomNum + "");
 
-                                                    Intent intent = new Intent(MakeAppLastStepActivity.this, MainActivity.class);
-//                            registerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                    startActivity(intent);
-                                                    finish();
+                                    HashMap<String, Object> app_map = new HashMap<>();
+                                    app_map.put("targetName", target_name);
+                                    app_map.put("reason", reason);
+                                    app_map.put("phone", phone);
+                                    app_map.put("date", date);
+                                    app_map.put("time", app_time);
+                                    app_map.put("selfAttendee", self_name);
+                                    app_map.put("otherAttendee", other_attendee_name);
+
+
+                                    mDatabase.updateChildren(app_map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                                    if (data.child("name").getValue().equals(target_name)) {
+                                                        //do ur stuff
+                                                        DataSnapshot a = data.child("week").child(date).child(index);
+                                                        if (Integer.parseInt(a.getValue().toString()) == 1 || Integer.parseInt(a.getValue().toString()) == 0) {
+                                                            a.getRef().setValue(randomNum);
+                                                        }
+
+                                                    }
                                                 }
-                                            }
-                                        });
 
-                                    } else {
-                                        Toast.makeText(MakeAppLastStepActivity.this, "__status is___" + a.getValue(), Toast.LENGTH_SHORT).show();
-                                    }
-//                                        Toast.makeText(MakeAppLastStepActivity.this,"________yes__________"+data.child("week").child(date).child(index+"").getValue(),Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(MakeAppLastStepActivity.this, MainActivity.class);
+//                            registerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        }
+                                    });
+
                                 } else {
-                                    //do something
+                                    Toast.makeText(MakeAppLastStepActivity.this, "Other Attendee is no free:" + a.getValue(), Toast.LENGTH_SHORT).show();
+
+                                    Intent intent = new Intent(MakeAppLastStepActivity.this, MainActivity.class);
+//                            registerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                    finish();
                                 }
+//                                        Toast.makeText(MakeAppLastStepActivity.this,"________yes__________"+data.child("week").child(date).child(index+"").getValue(),Toast.LENGTH_SHORT).show();
+                            } else {
+                                //do something
                             }
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                        }
+                    }
 
-                    });
+                });
 
-                }
-
-
-
+            }
 
 
         });
@@ -235,7 +258,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
 
     public String parseTime(String time) {
         String res[];
-        res = app_time.split(":");
+        res = time.split(":");
         int index = 0;
         if (Integer.parseInt(res[1]) == 30) {
             index++;

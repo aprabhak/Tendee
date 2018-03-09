@@ -112,7 +112,7 @@ public class SearchActivity extends AppCompatActivity {
                                                 user_name.getText();
                                              Context context = view.getContext();
                                              Intent intent = new Intent(context, Search_ResultActivity.class);
-                                             Toast.makeText(context, user_name.getText(), Toast.LENGTH_SHORT).show();
+//                                             Toast.makeText(context, user_name.getText(), Toast.LENGTH_SHORT).show();
                                              intent.putExtra("User_Name", user_name.getText());
                                              context.startActivity(intent);
 
