@@ -43,7 +43,7 @@ public class Search_ResultActivity extends AppCompatActivity {
         mMakeappBtm = (Button)findViewById(R.id.MkapmtBtm);
 
         final String name =getIntent().getStringExtra("User_Name");
-        Toast.makeText(Search_ResultActivity.this, name, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(Search_ResultActivity.this, name, Toast.LENGTH_SHORT).show();
         mResName.setText(name);
 
 //        mUserDatabase.child("name").equalTo(name);
@@ -53,7 +53,7 @@ public class Search_ResultActivity extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Toast.makeText(Search_ResultActivity.this, Long.toString(dataSnapshot.getChildrenCount()), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Search_ResultActivity.this, Long.toString(dataSnapshot.getChildrenCount()), Toast.LENGTH_SHORT).show();
                 for (DataSnapshot childSnapshot: dataSnapshot.getChildren()){
                     if(childSnapshot.exists()) {
                         Users user = childSnapshot.getValue(Users.class);
@@ -80,8 +80,8 @@ public class Search_ResultActivity extends AppCompatActivity {
                 //   String name = mSearchName.getEditText().getText().toString();
                 Context context = view.getContext();
                 Intent intent = new Intent(context, Make_AppointmentActivity.class);
-//                Toast.makeText(context, user_name.getText(), Toast.LENGTH_SHORT).show();
-//                intent.putExtra("User_Name", user_name.getText());
+
+                intent.putExtra("target_user_name", mResName.getText());
                 context.startActivity(intent);
 
             }

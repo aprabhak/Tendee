@@ -30,4 +30,13 @@
         android:layout_marginTop="22dp"
         app:srcCompat="@android:drawable/sym_def_app_icon" />
 
+    <TextView
+        android:id="@+id/id_display"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_toEndOf="@+id/imageView"
+        android:visibility="invisible"
+        android:text="id_example"/>
+
 </RelativeLayout>
