@@ -68,6 +68,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         startTime = (TimePicker)findViewById(R.id.start_timePicker);
         endTime = (TimePicker)findViewById(R.id.end_timePicker);
         freeBtn = (Button)findViewById(R.id.free_btn);
+        busyBtn = (Button)findViewById(R.id.busy_btn);
         freeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,6 +121,54 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                 for (int i = startIndex; i < endIndex; i++) {
                     Log.d("indexes", "onClick: "+i);
                 }
+            }
+        });
+        busyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int startHour = startTime.getCurrentHour();
+                int startMin = startTime.getCurrentMinute();
+                int endHour = endTime.getCurrentHour();
+                int endMin = endTime.getCurrentMinute();
+                //Log.d("hour", "onClick: "+startHour);
+                //Log.d("minute", "onClick: "+startMin);
+                if (startHour < 9 || startHour > 17 || endHour < 9 || endHour > 17) {
+                    Toast.makeText(ScheduleActivity.this, "invalid time", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (startHour > endHour) {
+                    Toast.makeText(ScheduleActivity.this, "impossible time", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                startIndex = (startHour - 9) * 2;
+                if (startMin >= 30) {
+                    startIndex = startIndex + 1;
+                }
+                //Log.d("startIndex", "onClick: "+startIndex);
+                endIndex = (endHour - 9) * 2;
+                if (endMin >= 30) {
+                    endIndex = endIndex + 1;
+                }
+                mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+                String current_uid = mCurrentUser.getUid();
+                mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid).child("week").child(day);
+                newDay = new ArrayList<Long>();
+                mUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        newDay = ((ArrayList<Long>)dataSnapshot.getValue());
+                        for (int i = startIndex; i <= endIndex; i++) {
+                            newDay.set(i,0L);
+                        }
+                        mUserDatabase.setValue(newDay);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         });
     }

@@ -288,4 +288,102 @@ public class ExampleUnitTest {
         assertEquals(false,reg.validAddress("Fucking Dr West Lafayette In"));
 
     }
+
+    @Test
+    public void registrationInValidAddress8() throws Exception {
+        RegisterActivity reg = new RegisterActivity();
+        assertEquals(false,reg.validAddress("Hiltop West Lafayette In"));
+
+    }
+
+    @Test
+    public void badWordEraser() throws Exception {
+        RegisterActivity reg = new RegisterActivity();
+        assertEquals("******* GOOD",reg.wordFilter("Fucking GOOD"));
+
+    }
+
+    @Test
+    public void badWordEraser1() throws Exception {
+        RegisterActivity reg = new RegisterActivity();
+        assertEquals("Today is a very ****** day ****",reg.wordFilter("Today is a very shitty day Damn"));
+
+    }
+
+    @Test
+    public void validDate() throws Exception {
+        RegisterActivity reg = new RegisterActivity();
+        assertEquals(true,reg.validDay("01/11/2018"));
+
+    }
+
+    @Test
+    public void invalidDate() throws Exception {
+        RegisterActivity reg = new RegisterActivity();
+        assertEquals(false,reg.validDay("01/++/2018"));
+
+    }
+
+    @Test
+    public void invalidDate1() throws Exception {
+        RegisterActivity reg = new RegisterActivity();
+        assertEquals(false,reg.validDay("01/01/3000"));
+
+    }
+
+    @Test
+    public void invalidDate2() throws Exception {
+        RegisterActivity reg = new RegisterActivity();
+        assertEquals(false,reg.validDay("01/3423/2018"));
+
+    }
+
+    @Test
+    public void invalidDate3() throws Exception {
+        RegisterActivity reg = new RegisterActivity();
+        assertEquals(false,reg.validDay("123/01/2018"));
+
+    }
+
+    @Test
+    public void invalidDate4() throws Exception {
+        RegisterActivity reg = new RegisterActivity();
+        assertEquals(false,reg.validDay("01/++/2018"));
+
+    }
+
+    @Test
+    public void invalidDate5() throws Exception {
+        RegisterActivity reg = new RegisterActivity();
+        assertEquals(false,reg.validDay("01//2018"));
+
+    }
+
+    @Test
+    public void invalidDate6() throws Exception {
+        RegisterActivity reg = new RegisterActivity();
+        assertEquals(false,reg.validDay("01/0/2018/0"));
+
+    }
+
+    @Test
+    public void invalidDate7() throws Exception {
+        RegisterActivity reg = new RegisterActivity();
+        assertEquals(false,reg.validDay(""));
+
+    }
+
+    @Test
+    public void validDate1() throws Exception {
+        RegisterActivity reg = new RegisterActivity();
+        assertEquals(true,reg.validDay("03/31/2018"));
+
+    }
+
+    @Test
+    public void validDate2() throws Exception {
+        RegisterActivity reg = new RegisterActivity();
+        assertEquals(true,reg.validDay("12/20/2018"));
+
+    }
 }

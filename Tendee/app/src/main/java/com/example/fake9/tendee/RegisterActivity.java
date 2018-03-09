@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Date;
 import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -65,11 +66,33 @@ public class RegisterActivity extends AppCompatActivity {
     public boolean containsBadWords(String str)
     {
         String word = str.toLowerCase();
-        if (word.contains("bitch") || word.contains("asshole") || word.contains("son of a bitch") || word.contains("shit hole") || word.contains("mother fucker") || word.contains("fucker") || word.contains("fuck") || word.contains("mother") || word.contains("god") || word.contains("ass") || word.contains("dick") || word.contains("suck"))
+        if (word.contains("damn") || word.contains("shit") || word.contains("bitch") || word.contains("asshole") || word.contains("son of a bitch") || word.contains("shit hole") || word.contains("mother fucker") || word.contains("fucker") || word.contains("fuck") || word.contains("mother") || word.contains("god") || word.contains("ass") || word.contains("dick") || word.contains("suck"))
             return true;
         return false;
     }
 
+    public boolean validDay(String str)
+    {
+        String[] date = str.split("/");
+        if (date.length != 3)
+            return false;
+        int day,month, year;
+        try{
+        day = Integer.parseInt(date[1]);
+        month = Integer.parseInt(date[0]);
+        year = Integer.parseInt(date[2]);
+        } catch (NumberFormatException e)
+        {
+            return false;
+        }
+        if ( 0 > day || day > 31)
+            return false;
+        if (month < 0 || month > 12)
+            return false;
+        if (year != 2018)
+            return false;
+        return true;
+    }
     public boolean validEmail(String str)
     {
         if (!str.contains("@"))
@@ -132,6 +155,34 @@ public class RegisterActivity extends AppCompatActivity {
         if (other == 0)
             return false;
         return true;
+    }
+
+    public String wordFilter(String str)
+    {
+        if (!containsBadWords(str))
+            return str;
+        String newStr = "";
+        String[] arr = str.split(" ");
+        for (int i = 0; i < arr.length; i++) {
+            if (containsBadWords(arr[i]))
+            {
+                String clean = "";
+                for (int j = 0; j < arr[i].length(); j++) {
+                    clean += "*";
+                }
+                if (i != 0)
+                    newStr += " ";
+                newStr += clean;
+
+            }
+            else
+            {
+                if (i != 0)
+                    newStr += " ";
+                newStr += arr[i];
+            }
+        }
+        return newStr;
     }
     private void register_user(final String email, String password) {
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
