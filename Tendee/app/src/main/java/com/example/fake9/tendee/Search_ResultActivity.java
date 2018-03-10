@@ -57,10 +57,65 @@ public class Search_ResultActivity extends AppCompatActivity {
 
         mBlockSwitch.setTextOff("OFF");
         mBlockSwitch.setTextOn("ON");
-
-
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         final String current_uid = mCurrentUser.getUid();
+        final String name = getIntent().getStringExtra("User_Name");
+//        Toast.makeText(Search_ResultActivity.this, name, Toast.LENGTH_SHORT).show();
+        mResName.setText(name);
+        Query query = mUserDatabase.orderByChild("name").equalTo(name);//ok
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Toast.makeText(Search_ResultActivity.this, Long.toString(dataSnapshot.getChildrenCount()), Toast.LENGTH_SHORT).show();
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+                    if (childSnapshot.exists()) {
+                        Users user = childSnapshot.getValue(Users.class);
+                        //   String address = dataSnapshot.getRef().ge;
+                        res_user_email = user.getEmail();
+                        mResName.setText(user.getName());
+                        mResAddress.setText(user.getAddress());
+                        mResDes.setText(user.getDescription());
+                        mResEmail.setText(user.getEmail());
+
+                        mTempDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid).child("blockList");
+                        mTempDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) { //executes when data retrieved.
+                                //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
+
+                                for (DataSnapshot data : dataSnapshot.getChildren()) {
+
+
+                                    if (data.getValue().toString().equals(res_user_email)) {
+                                        mBlockSwitch.setChecked(true);
+                                        Toast.makeText(Search_ResultActivity.this, "Onclick->>>> ", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        break;
+                    }
+                }
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(Search_ResultActivity.this, "FAILED", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
         mTempDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
         mTempDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -104,29 +159,6 @@ public class Search_ResultActivity extends AppCompatActivity {
 
 
 
-        mTempDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid).child("blockList");
-        mTempDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) { //executes when data retrieved.
-                //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
-
-                    for (DataSnapshot data : dataSnapshot.getChildren()) {
-                        if (data.getValue().equals(res_user_email)) {
-                            mBlockSwitch.setChecked(true);
-                            Toast.makeText(Search_ResultActivity.this, "Onclick->>>> ", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
 
 
@@ -180,38 +212,12 @@ public class Search_ResultActivity extends AppCompatActivity {
         });
 
 
-        final String name = getIntent().getStringExtra("User_Name");
-//        Toast.makeText(Search_ResultActivity.this, name, Toast.LENGTH_SHORT).show();
-        mResName.setText(name);
+
 
 //        mUserDatabase.child("name").equalTo(name);
 //        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        Query query = mUserDatabase.orderByChild("name").equalTo(name);//ok
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Toast.makeText(Search_ResultActivity.this, Long.toString(dataSnapshot.getChildrenCount()), Toast.LENGTH_SHORT).show();
-                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    if (childSnapshot.exists()) {
-                        Users user = childSnapshot.getValue(Users.class);
-                        //   String address = dataSnapshot.getRef().ge;
-                        res_user_email = user.getEmail();
-                        mResName.setText(user.getName());
-                        mResAddress.setText(user.getAddress());
-                        mResDes.setText(user.getDescription());
-                        mResEmail.setText(user.getEmail());
-                        break;
-                    }
-                }
-            }
 
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(Search_ResultActivity.this, "FAILED", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         mMakeappBtm.setOnClickListener(new View.OnClickListener() {
             @Override
