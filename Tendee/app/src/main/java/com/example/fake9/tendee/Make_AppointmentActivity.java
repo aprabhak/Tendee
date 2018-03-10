@@ -101,7 +101,7 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
                 mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
                 final String current_uid = mCurrentUser.getUid();
                 mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
-                mUserDatabase.addValueEventListener(new ValueEventListener() {
+                mUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) { //executes when data retrieved.
                         //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
@@ -119,6 +119,7 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
 
                             finish();
                         }
+
 
 
                     }
@@ -140,6 +141,7 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
 
 //                Toast.makeText(Make_AppointmentActivity.this, "time is" + app_time + "date is ~" + date, Toast.LENGTH_SHORT).show();
                 startActivity(intent);
+                finish();
 
             }
         });
@@ -177,9 +179,9 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
 
                                 if (status == 1) {
                                     if (i % 2 == 0) {
-                                        time.add(8 + i / 2 + ":00");
+                                        time.add(9 + i / 2 + ":00");
                                     } else {
-                                        time.add(8 + (i - 1) / 2 + "" + ":30");
+                                        time.add(9 + (i - 1) / 2 + "" + ":30");
                                     }
                                 }
 
@@ -232,7 +234,7 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
         if (Integer.parseInt(res[1]) == 30) {
             index++;
         }
-        index += (Integer.parseInt(res[0]) - 8) * 2;
+        index += (Integer.parseInt(res[0]) - 9) * 2;
         return index + "";
     }
 

@@ -32,6 +32,15 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class SearchActivity extends AppCompatActivity {
     private ImageButton mSearchBtn;
@@ -39,8 +48,16 @@ public class SearchActivity extends AppCompatActivity {
     private RecyclerView mResultList;
     private FirebaseAuth mAuth;
     private DatabaseReference mUserDatabase;
+    private DatabaseReference mFirstDatabase;
     private FirebaseUser mCurrentUser;
-    public String test;
+    public String name_currentUser;
+    public static SearchActivity sea = new SearchActivity();
+
+    private static final String Admin_Address = "tendee408@outlook.com";
+    private static final String Admin_Password = "cs408tendee";
+    private static final String Outlook_MailServer = "smtp.office365.com";
+    private static final String Mail_Port = "587";
+
 
     public void getname(String name) {
 
@@ -59,13 +76,34 @@ public class SearchActivity extends AppCompatActivity {
         mResultList.setHasFixedSize(true);
         mResultList.setLayoutManager(new LinearLayoutManager(this));
 
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        final String current_uid = mCurrentUser.getUid();
+
+        mFirstDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
+        mFirstDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) { //executes when data retrieved.
+                //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
+                sea.name_currentUser= dataSnapshot.child("name").getValue().toString();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
         mSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //   String name = mSearchName.getEditText().getText().toString();
 
                 String name = mSearchName.getText().toString();
+
                 search_User(name);
+
 
 
             }
@@ -89,7 +127,8 @@ public class SearchActivity extends AppCompatActivity {
             protected void populateViewHolder(UserViewHolder viewHolder, Users model, int position) {
                 //Toast.makeText(SearchActivity.this, model.getName(), Toast.LENGTH_SHORT).show();
                 //      Toast.makeText(SearchActivity.this, model.getName(), Toast.LENGTH_SHORT).show();
-                viewHolder.setDetails(model.getName());
+
+                    viewHolder.setDetails(model.getName());
 
 
             }
@@ -109,13 +148,14 @@ public class SearchActivity extends AppCompatActivity {
                                          @Override
                                          public void onClick(View view) {
                                              TextView user_name = (TextView) mview.findViewById(R.id.name_text);
-                                                user_name.getText();
-                                             Context context = view.getContext();
-                                             Intent intent = new Intent(context, Search_ResultActivity.class);
+                                               if (!user_name.getText().equals(sea.name_currentUser)){
+                                                 Context context = view.getContext();
+                                                 Intent intent = new Intent(context, Search_ResultActivity.class);
 //                                             Toast.makeText(context, user_name.getText(), Toast.LENGTH_SHORT).show();
-                                             intent.putExtra("User_Name", user_name.getText());
-                                             context.startActivity(intent);
+                                                 intent.putExtra("User_Name", user_name.getText());
+                                                 context.startActivity(intent);
 
+                                             }
                                          }
                                      }
 

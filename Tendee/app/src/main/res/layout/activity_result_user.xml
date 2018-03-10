@@ -88,4 +88,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.631"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Switch
+        android:id="@+id/block_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/MkapmtBtm"
+        android:layout_alignTop="@+id/imageView2"
+        android:layout_marginTop="20dp"
+        android:checked="false"
+        android:textOff="No"
+        android:textOn="Yes"
+        android:text="Block" />
 </RelativeLayout>
