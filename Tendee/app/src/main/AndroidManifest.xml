@@ -44,7 +44,8 @@
             android:parentActivityName=".MyAppointmentsActivity" />
         <activity android:name=".Add_attendeeActivity" />
         <activity android:name=".Result_AttendeeActivity" />
-        <activity android:name=".MakeAppLastStepActivity"></activity>
+        <activity android:name=".MakeAppLastStepActivity" />
+        <activity android:name=".AppointmentDetailsActivity"></activity>
     </application>
 
 </manifest>

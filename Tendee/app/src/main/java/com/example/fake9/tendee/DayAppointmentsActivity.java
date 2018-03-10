@@ -140,7 +140,18 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                 for (int j = 0; j < apptindex.size(); j++) {
                     int index = apptindex.get(j);
                     long apptnum = apptnumber.get(j);
-                    String apptString = "appointment-"+apptnum+":1:00 to 1:30";
+                    String time;
+                    if (index == 0) {
+                        time = "9:00 to 9:30";
+                    } else if (index % 2 == 0) {
+                        index = 9 + (index / 2);
+                        time = index+ ":00" + " to "+index+":30";
+                    } else {
+                        index = 9 + (index / 2);
+                        int temp = index + 1;
+                        time = index+":30" + " to "+temp;
+                    }
+                    String apptString = "appointment-"+apptnum+":"+time;
                     timeIntervals.add(apptString);
                     /*String appnumString = Long.toString(apptnum);
                     if (daySchedule != null) {
@@ -181,6 +192,9 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                             Log.d("oi", "onItemClick: "+end);
                             String newstring = result.substring((start+1),end);
                             Toast.makeText(DayAppointmentsActivity.this, newstring, Toast.LENGTH_SHORT).show();
+                            Intent apptdetails = new Intent(DayAppointmentsActivity.this,AppointmentDetailsActivity.class);
+                            apptdetails.putExtra("apptnum",newstring);
+                            startActivity(apptdetails);
                         }
                     }
                 });

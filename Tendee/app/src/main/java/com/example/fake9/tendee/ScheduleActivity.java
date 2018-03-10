@@ -87,14 +87,18 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     return;
                 }
                 startIndex = (startHour - 9) * 2;
-                if (startMin > 30) {
+                if (startMin >=30) {
                     startIndex = startIndex + 1;
                 }
                 //Log.d("startIndex", "onClick: "+startIndex);
                 endIndex = (endHour - 9) * 2;
-                if (endMin > 30) {
+                if (endMin > 45) {
                     endIndex = endIndex + 1;
                 }
+                if (endMin <= 15) {
+                    endIndex--;
+                }
+
                 Log.d("fuck", "onClick: "+startIndex);
                 Log.d("click", "onClick: "+endIndex);
                 mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -107,8 +111,9 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                         newDay = ((ArrayList<Long>)dataSnapshot.getValue());
                         Log.d("newday", "onDataChange:"+newDay.toString());
                         for (int i = startIndex; i <= endIndex; i++) {
-                            //Log.d("indexes", "onClick: "+i);
-                            newDay.set(i,1L);
+                            if (newDay.get(i) == 0) {
+                                newDay.set(i,1L);
+                            }
                         }
                         mUserDatabase.setValue(newDay);
 
@@ -135,18 +140,21 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     Toast.makeText(ScheduleActivity.this, "invalid time", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (startHour > endHour) {
+                /*if (startHour > endHour) {
                     Toast.makeText(ScheduleActivity.this, "impossible time", Toast.LENGTH_SHORT).show();
                     return;
-                }
+                }*/
                 startIndex = (startHour - 9) * 2;
-                if (startMin > 30) {
+                if (startMin >=30) {
                     startIndex = startIndex + 1;
                 }
                 //Log.d("startIndex", "onClick: "+startIndex);
                 endIndex = (endHour - 9) * 2;
-                if (endMin > 30) {
+                if (endMin > 45) {
                     endIndex = endIndex + 1;
+                }
+                if (endMin <= 15) {
+                    endIndex--;
                 }
                 mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
                 String current_uid = mCurrentUser.getUid();
@@ -157,7 +165,11 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         newDay = ((ArrayList<Long>)dataSnapshot.getValue());
                         for (int i = startIndex; i <= endIndex; i++) {
-                            newDay.set(i,0L);
+                            if (newDay.get(i) <= 1) {
+                                newDay.set(i,0L);
+                            }
+
+
                         }
                         mUserDatabase.setValue(newDay);
                     }
