@@ -33,6 +33,9 @@ public class DayAppointmentsActivity extends AppCompatActivity {
     ArrayList<String> timeIntervals;
     private ListView listView;
     private ListAdapter listAdapter;
+    ArrayList<Integer> apptindex;
+    ArrayList<Long> apptnumber;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +65,8 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                 startIndexes = new ArrayList<Integer>();
                 endIndexes = new ArrayList<Integer>();
                 timeIntervals = new ArrayList<String>();
+                apptindex = new ArrayList<Integer>();
+                apptnumber = new ArrayList<Long>();
                 for (int i = 0; i < daySchedule.size(); i++) {
                     //starthour = daySchedule.get(i);
                     if (daySchedule.get(i) == 1L) {
@@ -73,6 +78,10 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                         }
                         endIndexes.add(k-1);
                         i = k;
+                    } else if (daySchedule.get(i) != 0) {
+                        //Toast.makeText(DayAppointmentsActivity.this, "hi", Toast.LENGTH_SHORT).show();
+                        apptindex.add(i);
+                        apptnumber.add(daySchedule.get(i));
                     }
                 }
                 Log.d("startindexes", "onDataChange: "+startIndexes.toString());
@@ -83,6 +92,7 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                 int endmin = 0;
                 for (int j = 0; j < startIndexes.size(); j++) {
                     starthour = startIndexes.get(j);
+                    int check1 = starthour;
                     if (starthour == 0) {
                         starthour = starthour + 9;
                     } else if (starthour % 2 == 0) {
@@ -92,6 +102,7 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                         startmin = 30;
                     }
                     endhour = endIndexes.get(j);
+                    int check2 = endhour;
                     if (endhour == 0) {
                         endhour = endhour + 9;
                     } else if (endhour % 2 == 0) {
@@ -100,6 +111,16 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                         endhour = 9 + (endhour / 2);
                         endmin = 30;
                     }
+                    if (check1 == check2) {
+                        if (check1 == 0) {
+                            endmin = 30;
+                        } else if (check2 % 2 == 0) {
+                            endmin = 30;
+                        } else {
+                            endmin = 0;
+                            endhour = endhour + 1;
+                        }
+                    }
                     Log.d("startingtime", "onDataChange: "+starthour + " " +startmin);
                     Log.d("endingtime", "onDataChange: "+endhour + " " +endmin);
                     String time = "Free: " + starthour + ":" + startmin + " to " + endhour + ":" + endmin;
@@ -107,6 +128,15 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                     //Toast.makeText(DayAppointmentsActivity.this, time, Toast.LENGTH_SHORT).show();
                     startmin = 0;
                     endmin = 0;
+                }
+                for (int j = 0; j < apptindex.size(); j++) {
+                    int index = apptindex.get(j);
+                    long apptnum = apptnumber.get(j);
+                    String apptime;
+                    //Log.d("apptnum", "onDataChange: "+apptnum);
+                    if (index == 0) {
+                        
+                    }
                 }
                 Log.d("timeintervals", "onDataChange: "+timeIntervals.toString());
                 listAdapter = new ArrayAdapter<String>(DayAppointmentsActivity.this,android.R.layout.simple_list_item_1,timeIntervals);
