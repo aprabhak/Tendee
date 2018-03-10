@@ -76,30 +76,61 @@ public class Search_ResultActivity extends AppCompatActivity {
 
 //        mBlockSwitch.setChecked(true);
 
+//
+//        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+//        Query setDefaultCheckQuery = mUserDatabase.orderByChild("email").equalTo(mResEmail.getText().toString());//ok
+//        setDefaultCheckQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+//                    childSnapshot = childSnapshot.child("blockList");
+//
+//                    for (int i = 0; i <= 4; i++) {
+//                        String email = childSnapshot.child(Integer.toString(i)).getValue().toString();
+//                        if (email.equals(current_user_email)) {
+//                            Toast.makeText(Search_ResultActivity.this, "Onclick->>>> ", Toast.LENGTH_SHORT).show();
+//                            mBlockSwitch.setChecked(true);
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                Toast.makeText(Search_ResultActivity.this, "FAILED", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
-        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-        Query firstquery = mUserDatabase.orderByChild("email").equalTo(mResEmail.getText().toString());//ok
-        firstquery.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+        mTempDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid).child("blockList");
+        mTempDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Toast.makeText(Search_ResultActivity.this, "Onclick->>>> ", Toast.LENGTH_SHORT).show();
-                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
-                    childSnapshot = childSnapshot.child("blockList");
+            public void onDataChange(DataSnapshot dataSnapshot) { //executes when data retrieved.
+                //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
 
-                    for (int i = 0; i <= 4; i++) {
-                        String email = childSnapshot.child(Integer.toString(i)).getValue().toString();
-                        if (email.equals(current_user_email)) {
+                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                        if (data.getValue().equals(res_user_email)) {
                             mBlockSwitch.setChecked(true);
+                            Toast.makeText(Search_ResultActivity.this, "Onclick->>>> ", Toast.LENGTH_SHORT).show();
                         }
+
                     }
-                }
+
+
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(Search_ResultActivity.this, "FAILED", Toast.LENGTH_SHORT).show();
+
             }
         });
+
+
+
+
 
 
 
@@ -109,9 +140,9 @@ public class Search_ResultActivity extends AppCompatActivity {
 
 
                 mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-                final String current_uid = mCurrentUser.getUid();
+
                 mTempDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid).child("blockList");
-                mTempDatabase.addValueEventListener(new ValueEventListener() {
+                mTempDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) { //executes when data retrieved.
                         //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
