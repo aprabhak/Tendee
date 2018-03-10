@@ -78,7 +78,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                 int endMin = endTime.getCurrentMinute();
                 //Log.d("hour", "onClick: "+startHour);
                 //Log.d("minute", "onClick: "+startMin);
-                if (startHour < 9 || startHour > 17 || endHour < 9 || endHour > 17) {
+                if (startHour < 8 || startHour > 17 || endHour < 8 || endHour > 17) {
                     Toast.makeText(ScheduleActivity.this, "invalid time", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -149,6 +149,19 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                 if (endMin >= 30) {
                     endIndex = endIndex + 1;
                 }
+                /*if (startHour == 9) {
+                    startIndex = 0;
+                    if (startMin > 30) {
+                        startIndex = 1;
+                    }
+                }
+                if (startHour == 10) {
+                    startIndex = 2;
+                    if (startMin > 30) {
+                        startIndex = 3;
+                    }
+                }
+                if () */
                 mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
                 String current_uid = mCurrentUser.getUid();
                 mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid).child("week").child(day);
@@ -157,7 +170,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         newDay = ((ArrayList<Long>)dataSnapshot.getValue());
-                        for (int i = startIndex; i <= endIndex; i++) {
+                        for (int i = startIndex; i < endIndex; i++) {
                             newDay.set(i,0L);
                         }
                         mUserDatabase.setValue(newDay);
@@ -186,7 +199,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
 
     public void result() {
         Log.d("method","value " +newDay.toString());
-        for (int i = startIndex; i <= endIndex; i++) {
+        for (int i = startIndex; i < endIndex; i++) {
             //Log.d("indexes", "onClick: "+i);
             newDay.set(i,1L);
         }
