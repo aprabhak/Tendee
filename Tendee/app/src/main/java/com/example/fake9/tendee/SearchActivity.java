@@ -34,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Properties;
 
+<<<<<<< HEAD
 /*import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
@@ -41,6 +42,8 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;*/
+=======
+>>>>>>> c58feeb8b100e9b13790a9774330d7dc87b83d13
 
 public class SearchActivity extends AppCompatActivity {
     private ImageButton mSearchBtn;
