@@ -38,6 +38,7 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
     private List<String> week;
     private String target_user_name;
     private Button mAddAttendee;
+    private Button mLastStep;
     public String attendee_list;
     public String date;
     public String app_time;
@@ -66,7 +67,7 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
         Spinner date_spinner = (Spinner) findViewById(R.id.week_spinner);
         time_spinner = (Spinner) findViewById(R.id.time_spinner);
         mAddAttendee = findViewById(R.id.add_attendee_btn);
-
+        mLastStep = findViewById(R.id.ToLastStepBtn);
 
         // Spinner click listener
         date_spinner.setOnItemSelectedListener((AdapterView.OnItemSelectedListener) this);
@@ -91,6 +92,62 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
         // attaching data adapter to spinner
         date_spinner.setAdapter(dataAdapter);
 
+
+        mLastStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+                final String current_uid = mCurrentUser.getUid();
+                mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
+                mUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) { //executes when data retrieved.
+                        //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
+
+                        String index = parseTime(app_time);
+                        if (Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString()) != 0 &&
+                                Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString()) != 1) {
+
+                            Toast.makeText(Make_AppointmentActivity.this, "You are not free at this time!!" , Toast.LENGTH_SHORT).show();
+
+//                            SystemClock.sleep(2000);
+
+                            Intent intent = new Intent(Make_AppointmentActivity.this, MainActivity.class);
+                            startActivity(intent);
+
+                            finish();
+                        }
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
+
+                Intent intent = new Intent(Make_AppointmentActivity.this, MakeAppLastStepActivity.class);
+
+                intent.putExtra("ATTENDEE_NAME", " ");
+
+                intent.putExtra("APPOINTMENT_DATE", date);
+
+                intent.putExtra("APPOINTMENT_TIME", app_time);
+
+                intent.putExtra("APPOINTMENT_TARGET", target_user_name);
+
+//                Toast.makeText(Make_AppointmentActivity.this, "time is" + app_time + "date is ~" + date, Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+                finish();
+
+
+
+
+            }
+        });
 
         mAddAttendee.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -173,30 +173,32 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
 //                                    Toast.makeText(MakeAppLastStepActivity.this,"i am in"+data.child("name").getValue(),Toast.LENGTH_SHORT).show();
 
-                            if (data.child("name").getValue().equals(other_attendee_name)) {
+                            if (data.child("name").getValue().equals(other_attendee_name) || other_attendee_name.equals(" ")) {
                                 //do ur stuff
 //                                Toast.makeText(MakeAppLastStepActivity.this, "i am in" + date, Toast.LENGTH_SHORT).show();
 
+
                                 DataSnapshot a = data.child("week").child(date).child(index);
-                                if (Integer.parseInt(a.getValue().toString()) == 1 || Integer.parseInt(a.getValue().toString()) == 0) {
-                                    a.getRef().setValue(randomNum);
+                                if (other_attendee_name.equals(" ")|Integer.parseInt(a.getValue().toString()) == 1 || Integer.parseInt(a.getValue().toString()) == 0) {
 
 
-                                    mUserDatabase.addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) { //executes when data retrieved.
-                                            //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
-                                            String index = parseTime(app_time);
-                                            dataSnapshot.child("week").child(date).child(index).getRef().setValue(randomNum);
+                                    if (!other_attendee_name.equals(" ")) {
+                                        a.getRef().setValue(randomNum);
+                                        mUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) { //executes when data retrieved.
+                                                //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
+                                                String index = parseTime(app_time);
+                                                dataSnapshot.child("week").child(date).child(index).getRef().setValue(randomNum);
 
-                                        }
+                                            }
 
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
 
-                                        }
-                                    });
-
+                                            }
+                                        });
+                                    }
 
                                     mDatabase = FirebaseDatabase.getInstance().getReference().child("Appointments").child(randomNum + "");
 
@@ -222,20 +224,26 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                                                             a.getRef().setValue(randomNum);
                                                         }
 
+                                                    }
+                                                }
 
-//                                                        try {
-//                                                            Send(target_name);
-//                                                        } catch (Exception e) {
-//                                                            e.printStackTrace();
-//                                                        }
-
-
+                                                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                                    if (data.child("name").getValue().equals(self_name)) {
+                                                        //do ur stuff
+                                                        DataSnapshot a = data.child("week").child(date).child(index);
+                                                        if (Integer.parseInt(a.getValue().toString()) == 1 || Integer.parseInt(a.getValue().toString()) == 0) {
+                                                            a.getRef().setValue(randomNum);
+                                                        }
 
                                                     }
                                                 }
 
+
+                                                Toast.makeText(MakeAppLastStepActivity.this, "SUCCESS" , Toast.LENGTH_SHORT).show();
+
                                                 Intent intent = new Intent(MakeAppLastStepActivity.this, MainActivity.class);
 //                            registerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
                                                 startActivity(intent);
                                                 finish();
                                             }
@@ -256,6 +264,8 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                                 //do something
                             }
                         }
+
+
                     }
 
                     @Override
