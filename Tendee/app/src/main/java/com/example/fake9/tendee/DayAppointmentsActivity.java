@@ -5,7 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -20,12 +23,15 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.concurrent.Semaphore;
 
 public class DayAppointmentsActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
     String day;
     private DatabaseReference mUserDatabase;
+    private DatabaseReference mApptDatabase;
     private FirebaseUser mCurrentUser;
     ArrayList<Long> daySchedule;
     ArrayList<Integer> startIndexes;
@@ -35,6 +41,9 @@ public class DayAppointmentsActivity extends AppCompatActivity {
     private ListAdapter listAdapter;
     ArrayList<Integer> apptindex;
     ArrayList<Long> apptnumber;
+    HashMap<String,Long> match;
+    private Button testbtn;
+
 
 
     @Override
@@ -50,8 +59,6 @@ public class DayAppointmentsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(day);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         listView = (ListView)findViewById(R.id.dayIntervals);
-
-
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_id = mCurrentUser.getUid();
@@ -129,18 +136,55 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                     startmin = 0;
                     endmin = 0;
                 }
+                //final Semaphore semaphore = new Semaphore(0);
                 for (int j = 0; j < apptindex.size(); j++) {
                     int index = apptindex.get(j);
                     long apptnum = apptnumber.get(j);
-                    String apptime;
-                    //Log.d("apptnum", "onDataChange: "+apptnum);
-                    if (index == 0) {
-                        
-                    }
+                    String apptString = "appointment-"+apptnum+":1:00 to 1:30";
+                    timeIntervals.add(apptString);
+                    /*String appnumString = Long.toString(apptnum);
+                    if (daySchedule != null) {
+                        mApptDatabase = FirebaseDatabase.getInstance().getReference().child("Appointments").child(appnumString);
+                        mApptDatabase.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String name = dataSnapshot.child("targetName").getValue().toString();
+                                Toast.makeText(DayAppointmentsActivity.this, name, Toast.LENGTH_SHORT).show();
+                                timeIntervals.add(name);
+                                semaphore.release();
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    } */
+
                 }
                 Log.d("timeintervals", "onDataChange: "+timeIntervals.toString());
                 listAdapter = new ArrayAdapter<String>(DayAppointmentsActivity.this,android.R.layout.simple_list_item_1,timeIntervals);
                 listView.setAdapter(listAdapter);
+                //listAdapter.notify();
+                //listView.refreshDrawableState();
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        String result = String.valueOf(adapterView.getItemAtPosition(i));
+                        if (result.contains("Free")) {
+                            Toast.makeText(DayAppointmentsActivity.this, "no more details", Toast.LENGTH_SHORT).show();
+                            return;
+                        } else {
+                            int start = result.indexOf('-');
+                            int end = result.indexOf(':');
+                            Log.d("oi", "onItemClick: "+start);
+                            Log.d("oi", "onItemClick: "+end);
+                            String newstring = result.substring((start+1),end);
+                            Toast.makeText(DayAppointmentsActivity.this, newstring, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
             }
 
             @Override

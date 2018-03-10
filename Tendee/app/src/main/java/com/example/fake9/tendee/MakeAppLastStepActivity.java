@@ -38,11 +38,11 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import javax.mail.Message;
+/*import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage;*/
 
 public class MakeAppLastStepActivity extends AppCompatActivity {
     private DatabaseReference mUserDatabase;

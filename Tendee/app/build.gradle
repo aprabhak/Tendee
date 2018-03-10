@@ -35,7 +35,7 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    implementation files('/Users/ChaoLun/Documents/CS307/javax.mail.jar')
+    //implementation files('/Users/ChaoLun/Documents/CS307/javax.mail.jar')
 }
 
 
