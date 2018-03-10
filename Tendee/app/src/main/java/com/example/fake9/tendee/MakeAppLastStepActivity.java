@@ -34,14 +34,24 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class MakeAppLastStepActivity extends AppCompatActivity {
     private DatabaseReference mUserDatabase;
     private FirebaseUser mCurrentUser;
     private DatabaseReference mDatabase;
-
+    private static final String Admin_Address = "tendee408@outlook.com";
+    private static final String Admin_Password = "cs408tendee";
+    private static final String Outlook_MailServer = "smtp.office365.com";
+    private static final String Mail_Port = "587";
     private TextView display_attendee;
     private TextView display_date;
     private TextView display_time;
@@ -216,6 +226,15 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                                                             a.getRef().setValue(randomNum);
                                                         }
 
+
+//                                                        try {
+//                                                            Send(target_name);
+//                                                        } catch (Exception e) {
+//                                                            e.printStackTrace();
+//                                                        }
+
+
+
                                                     }
                                                 }
 
@@ -233,6 +252,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                                     Intent intent = new Intent(MakeAppLastStepActivity.this, MainActivity.class);
 //                            registerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
+
                                     finish();
                                 }
 //                                        Toast.makeText(MakeAppLastStepActivity.this,"________yes__________"+data.child("week").child(date).child(index+"").getValue(),Toast.LENGTH_SHORT).show();
@@ -263,9 +283,48 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
         if (Integer.parseInt(res[1]) == 30) {
             index++;
         }
-        index += (Integer.parseInt(res[0]) - 8) * 2;
+        index += (Integer.parseInt(res[0]) - 9) * 2;
         return index + "";
     }
+
+
+//    public void Send(String ID)throws Exception{
+//        Toast.makeText(MakeAppLastStepActivity.this,"Sending message...", Toast.LENGTH_SHORT).show();
+//        Properties prop = new Properties();
+//        prop.setProperty("mail.host", Outlook_MailServer);
+//        prop.setProperty("mail.transport.protocol", "smtp");
+//        prop.setProperty("mail.smtp.auth", "true");
+//        prop.put("mail.smtp.port", Mail_Port);
+//
+//        prop.put("mail.smtp.starttls.enable", "true");
+//
+//        Session session = Session.getInstance(prop);
+//        //Set debug to true to open debug
+//        session.setDebug(false);
+//
+//        Transport ts = session.getTransport();
+//
+//        ts.connect(Outlook_MailServer, Admin_Address, Admin_Password);
+//
+//
+//        MimeMessage message = new MimeMessage(session);
+//
+//        message.setFrom(new InternetAddress(Admin_Address));
+//
+//        message.setRecipient(Message.RecipientType.TO, new InternetAddress("shao90@purdue.com"));
+//
+//        message.setSubject("Appointment Confirmation");
+//        message.setContent("Mail test, don't reply Hello \""+target_name+"\" <br/> <br/> Tendee_Team", "text/html;charset=UTF-8");
+//
+//
+//        ts.sendMessage(message, message.getAllRecipients());
+//
+//        ts.close();
+//        // System.out.println("SUCCESS");
+//
+//
+//    }
+
 
 
 }

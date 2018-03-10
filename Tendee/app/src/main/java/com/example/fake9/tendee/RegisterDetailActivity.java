@@ -125,6 +125,8 @@ public class RegisterDetailActivity extends AppCompatActivity {
         int max = 100000;
         int randomNum = ThreadLocalRandom.current().nextInt(min,max+1);
         usermap.put("Id",randomNum);
+
+        usermap.put("blockList",new ArrayList<String>(Arrays.asList(" ", " " ," "," "," ")));
         mDatabase.updateChildren(usermap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

@@ -36,6 +36,7 @@ public class Add_attendeeActivity extends AppCompatActivity {
     public String date;
     public String app_time;
     public String target_name;
+    public String name_currentUser;
     public static Add_attendeeActivity app = new Add_attendeeActivity();
 
 
@@ -134,23 +135,25 @@ public class Add_attendeeActivity extends AppCompatActivity {
                                          @Override
                                          public void onClick(View view) {
                                              TextView user_name = (TextView) mview.findViewById(R.id.name_text);
-                                             user_name.getText();
-                                             Context context = view.getContext();
-                                             Intent intent = new Intent(context, MakeAppLastStepActivity.class);
 
-                                             String app_date  = app.date;
-                                             String app_time = app.app_time;
+                                             if (!user_name.getText().equals(app.target_name) &&
+                                                     !user_name.getText().equals(SearchActivity.sea.name_currentUser)) {
+                                                 Context context = view.getContext();
+                                                 Intent intent = new Intent(context, MakeAppLastStepActivity.class);
 
-                                             intent.putExtra("ATTENDEE_NAME", user_name.getText());
-                                             intent.putExtra("APPOINTMENT_DATE", app_date);
-                                             intent.putExtra("APPOINTMENT_TIME", app.app_time);
-                                             intent.putExtra("APPOINTMENT_TARGET", app.target_name);
-                                          //   Log.d("tallll:","jhgh"+app_time);
-                                           //  Log.d("hello", "onClick: ");
-                                            // Toast.makeText(Add_attendeeActivity.this,"",Toast.LENGTH_SHORT).show();
-                                             context.startActivity(intent);
+                                                 String app_date = app.date;
+                                                 String app_time = app.app_time;
 
+                                                 intent.putExtra("ATTENDEE_NAME", user_name.getText());
+                                                 intent.putExtra("APPOINTMENT_DATE", app_date);
+                                                 intent.putExtra("APPOINTMENT_TIME", app.app_time);
+                                                 intent.putExtra("APPOINTMENT_TARGET", app.target_name);
+                                                 //   Log.d("tallll:","jhgh"+app_time);
+                                                 //  Log.d("hello", "onClick: ");
+                                                 // Toast.makeText(Add_attendeeActivity.this,"",Toast.LENGTH_SHORT).show();
+                                                 context.startActivity(intent);
 
+                                             }
                                               // Call once you redirect to another activity
 
                                          }
