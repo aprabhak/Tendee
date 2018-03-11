@@ -94,8 +94,11 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
 
 
         mLastStep.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
+                if(app_time!=null){
                 mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
                 final String current_uid = mCurrentUser.getUid();
                 mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
@@ -108,7 +111,7 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
                         if (Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString()) != 0 &&
                                 Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString()) != 1) {
 
-                            Toast.makeText(Make_AppointmentActivity.this, "You are not free at this time!!" , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Make_AppointmentActivity.this, "You are not free at this time!!", Toast.LENGTH_SHORT).show();
 
 //                            SystemClock.sleep(2000);
 
@@ -117,7 +120,6 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
 
                             finish();
                         }
-
 
 
                     }
@@ -142,23 +144,27 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
 //                Toast.makeText(Make_AppointmentActivity.this, "time is" + app_time + "date is ~" + date, Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 finish();
-
-
-
+                }else{
+                    Toast.makeText(Make_AppointmentActivity.this, "Please Choose Time!!", Toast.LENGTH_SHORT).show();
+                }
 
             }
+
+            //
         });
+
 
         mAddAttendee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //   String name = mSearchName.getEditText().getText().toString();
 
-
+                if(app_time!=null){
                 mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
                 final String current_uid = mCurrentUser.getUid();
                 mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
                 mUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) { //executes when data retrieved.
                         //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
@@ -167,7 +173,7 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
                         if (Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString()) != 0 &&
                                 Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString()) != 1) {
 
-                            Toast.makeText(Make_AppointmentActivity.this, "You are not free at this time!!" , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Make_AppointmentActivity.this, "You are not free at this time!!", Toast.LENGTH_SHORT).show();
 
 //                            SystemClock.sleep(2000);
 
@@ -178,8 +184,8 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
                         }
 
 
-
                     }
+
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -199,9 +205,13 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
 //                Toast.makeText(Make_AppointmentActivity.this, "time is" + app_time + "date is ~" + date, Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 finish();
+                }else{
+                    Toast.makeText(Make_AppointmentActivity.this, "Please Choose Time!!", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
+
 
 
     }

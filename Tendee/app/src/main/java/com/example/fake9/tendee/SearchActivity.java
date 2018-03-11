@@ -95,6 +95,7 @@ public class SearchActivity extends AppCompatActivity {
 
                 String name = mSearchName.getText().toString();
 
+                if(name.length() > 3)
                 search_User(name);
 
 

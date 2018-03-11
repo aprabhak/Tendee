@@ -45,7 +45,7 @@
         android:layout_below="@+id/H_Label"
         android:layout_marginEnd="26dp"
         android:layout_marginTop="14dp"
-        android:hint="Search"
+        android:hint="Search by Name"
         android:ems="10"
         android:inputType="textPersonName" />
 

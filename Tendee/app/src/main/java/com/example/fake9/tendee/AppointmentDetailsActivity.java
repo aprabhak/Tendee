@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -24,7 +25,7 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
 
     String apptnum;
     private TextView apptdate;
-    private TextView otherattendee;
+    private TextView addressdisplay;
     private TextView phonenum;
     private TextView reason;
     private TextView selfattendee;
@@ -50,18 +51,23 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
         Log.d("apptnum", "onCreate: "+apptnum);
 
         apptdate = (TextView)findViewById(R.id.apptdate);
-        otherattendee = (TextView)findViewById(R.id.otherattendee);
+
         phonenum = (TextView)findViewById(R.id.phonenum);
         reason = (TextView)findViewById(R.id.reason);
         selfattendee = (TextView)findViewById(R.id.selfattendee);
         targetname = (TextView)findViewById(R.id.targetname);
         timeview = (TextView)findViewById(R.id.timeview);
+        addressdisplay = (TextView)findViewById(R.id.address);
         deletebtn = (Button)findViewById(R.id.deleteappt);
+
+        reason.setMovementMethod(new ScrollingMovementMethod());
+        addressdisplay.setMovementMethod(new ScrollingMovementMethod());
 
         apptdatabase = FirebaseDatabase.getInstance().getReference().child("Appointments").child(apptnum);
         apptdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("date").getValue()!=null){
                 final String Date = dataSnapshot.child("date").getValue().toString();
                 final String OtherAttendee = dataSnapshot.child("otherAttendee").getValue().toString();
                 String Phonenum = dataSnapshot.child("phone").getValue().toString();
@@ -69,12 +75,18 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
                 final String SelfAttendee = dataSnapshot.child("selfAttendee").getValue().toString();
                 final String TargetName = dataSnapshot.child("targetName").getValue().toString();
                 final String Time = dataSnapshot.child("time").getValue().toString();
-
+                final String Address = dataSnapshot.child("address").getValue().toString();
+                String attendee_list;
                 apptdate.setText(Date);
-                otherattendee.setText(OtherAttendee);
+                addressdisplay.setText(Address);
                 phonenum.setText(Phonenum);
                 reason.setText(Reason);
-                selfattendee.setText(SelfAttendee);
+                if (OtherAttendee.equals(" ")) {
+                    selfattendee.setText(SelfAttendee);
+                } else {
+                    attendee_list = SelfAttendee + ", " + OtherAttendee;
+                    selfattendee.setText(attendee_list);
+                }
                 targetname.setText(TargetName);
                 timeview.setText(Time);
 
@@ -96,7 +108,7 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
                                         int status = Integer.parseInt(childSnapshot.child(Integer.toString(i)).getValue().toString());
                                         //   String address = dataSnapshot.getRef().ge;
 
-                                        if (status ==Integer.parseInt(apptnum)) {
+                                        if (status == Integer.parseInt(apptnum)) {
                                             childSnapshot.child(Integer.toString(i)).getRef().setValue(0);
                                         }
                                     }
@@ -127,7 +139,7 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
                                         int status = Integer.parseInt(childSnapshot.child(Integer.toString(i)).getValue().toString());
                                         //   String address = dataSnapshot.getRef().ge;
 
-                                        if (status ==Integer.parseInt(apptnum)) {
+                                        if (status == Integer.parseInt(apptnum)) {
                                             childSnapshot.child(Integer.toString(i)).getRef().setValue(0);
                                         }
                                     }
@@ -158,7 +170,7 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
                                         int status = Integer.parseInt(childSnapshot.child(Integer.toString(i)).getValue().toString());
                                         //   String address = dataSnapshot.getRef().ge;
 
-                                        if (status ==Integer.parseInt(apptnum)) {
+                                        if (status == Integer.parseInt(apptnum)) {
                                             childSnapshot.child(Integer.toString(i)).getRef().setValue(0);
                                         }
                                     }
@@ -175,12 +187,14 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
                                 Toast.makeText(AppointmentDetailsActivity.this, "FAILED", Toast.LENGTH_SHORT).show();
                             }
                         });
-                        Intent mainIntent = new Intent(AppointmentDetailsActivity.this,MainActivity.class);
+                        Intent mainIntent = new Intent(AppointmentDetailsActivity.this, MainActivity.class);
                         startActivity(mainIntent);
                     }
                 });
 
-
+            }else{
+                    return;
+                }
             }
 
             @Override

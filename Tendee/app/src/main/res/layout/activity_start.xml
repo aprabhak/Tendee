@@ -41,4 +41,12 @@
         android:text="ALREADY HAVE ACCOUNT"
         android:textColor="@android:color/white" />
 
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_above="@+id/textView"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/tendee_profile" />
+
 </RelativeLayout>

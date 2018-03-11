@@ -89,7 +89,6 @@ public class Search_ResultActivity extends AppCompatActivity {
 
                                     if (data.getValue().toString().equals(res_user_email)) {
                                         mBlockSwitch.setChecked(true);
-                                        Toast.makeText(Search_ResultActivity.this, "Onclick->>>> ", Toast.LENGTH_SHORT).show();
                                     }
 
                                 }
@@ -232,12 +231,14 @@ public class Search_ResultActivity extends AppCompatActivity {
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         boolean findBlockedUser=false;
                         for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+
+//                            = childSnapshot.child("address").getValue().toString();
                             childSnapshot = childSnapshot.child("blockList");
 
                             for (int i = 0; i <= 4; i++) {
                                 String email = childSnapshot.child(Integer.toString(i)).getValue().toString();
                                 if (email.equals(current_user_email)) {
-                                    Toast.makeText(Search_ResultActivity.this, "You are blocked bro", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Search_ResultActivity.this, "You are blocked", Toast.LENGTH_SHORT).show();
 
                                 findBlockedUser=true;
                                     Intent intent = new Intent(Search_ResultActivity.this, MainActivity.class);

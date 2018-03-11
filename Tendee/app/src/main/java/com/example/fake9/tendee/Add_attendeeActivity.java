@@ -86,7 +86,8 @@ public class Add_attendeeActivity extends AppCompatActivity {
                 //   String name = mSearchName.getEditText().getText().toString();
 
                 String name = mSearchName.getText().toString();
-                search_User(name);
+                if(name.length() > 3)
+                    search_User(name);
 
 
             }

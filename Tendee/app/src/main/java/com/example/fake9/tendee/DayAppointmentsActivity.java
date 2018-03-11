@@ -162,9 +162,9 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                 Log.d("startindexes", "onDataChange: "+startIndexes.toString());
                 Log.d("endindexes", "onDataChange: "+endIndexes.toString());
                 int starthour = 0;
-                int startmin = 0;
+                String startmin = "00";
                 int endhour = 0;
-                int endmin = 0;
+                String endmin = "00";
                 for (int j = 0; j < startIndexes.size(); j++) {
                     starthour = startIndexes.get(j);
                     int check1 = starthour;
@@ -174,7 +174,7 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                         starthour = 9 + (starthour / 2);
                     } else {
                         starthour = 9 + (starthour / 2);
-                        startmin = 30;
+                        startmin = "30";
                     }
                     endhour = endIndexes.get(j);
                     int check2 = endhour;
@@ -184,25 +184,29 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                         endhour = 9 + (endhour / 2);
                     } else {
                         endhour = 9 + (endhour / 2);
-                        endmin = 30;
+                        endmin = "30";
                     }
                     if (check1 == check2) {
                         if (check1 == 0) {
-                            endmin = 30;
+                            endmin = "30";
                         } else if (check2 % 2 == 0) {
-                            endmin = 30;
+                            endmin = "30";
                         } else {
-                            endmin = 0;
+                            endmin = "00";
                             endhour = endhour + 1;
                         }
                     }
                     Log.d("startingtime", "onDataChange: "+starthour + " " +startmin);
                     Log.d("endingtime", "onDataChange: "+endhour + " " +endmin);
-                    String time = "Free: " + starthour + ":" + startmin + " to " + endhour + ":" + endmin;
+                    String time;
+
+
+                     time = "Free between: " + starthour + ":" + startmin + " to " + endhour + ":" + endmin;
+
                     timeIntervals.add(time);
                     //Toast.makeText(DayAppointmentsActivity.this, time, Toast.LENGTH_SHORT).show();
-                    startmin = 0;
-                    endmin = 0;
+                    startmin = "00";
+                    endmin = "00";
                 }
                 //final Semaphore semaphore = new Semaphore(0);
                 for (int j = 0; j < apptindex.size(); j++) {
@@ -217,9 +221,9 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                     } else if (index % 2 != 0) {
                         index = 9 + (index / 2);
                         int temp = index + 1;
-                        time = index+":30" + " to "+temp;
+                        time = index+":30" + " to "+temp+":00";
                     }
-                    String apptString = "appointment-"+apptnum+":"+time;
+                    String apptString = "Appointment: between "+time;
                     timeIntervals.add(apptString);
                 }
                 Log.d("timeintervals", "onDataChange: "+timeIntervals.toString());

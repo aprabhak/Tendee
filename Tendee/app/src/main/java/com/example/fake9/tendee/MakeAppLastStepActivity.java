@@ -67,6 +67,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
     public String phone;
     public String myEmail;
     public String myAddress;
+    public String targetAddress;
     final int randomNum = (int) ((Math.random() * ((900000000 - 100000000) + 1)) + 100000000);
 
     @Override
@@ -135,6 +136,18 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                 }
                 if (reason.equals("") || phone == null){
                     Toast.makeText(MakeAppLastStepActivity.this,"Information Incomplete!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (reason.length()>60){
+                    Toast.makeText(MakeAppLastStepActivity.this,"No more than 60 characters",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (phone.length()>15){
+                    Toast.makeText(MakeAppLastStepActivity.this,"No more than 15 numbers",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (phone.length()<3){
+                    Toast.makeText(MakeAppLastStepActivity.this,"Incorrect Phone Number",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -208,6 +221,15 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                                         });
                                     }
 
+                                    for (DataSnapshot data1 : dataSnapshot.getChildren()) {
+                                        if (data1.child("name").getValue().equals(target_name)) {
+                                            //do ur stuff
+                                            targetAddress = data.child("address").getValue().toString();
+
+
+                                        }
+                                    }
+//                                    Toast.makeText(MakeAppLastStepActivity.this,"target is "+targetAddress, Toast.LENGTH_SHORT).show();
                                     mDatabase = FirebaseDatabase.getInstance().getReference().child("Appointments").child(randomNum + "");
 
                                     HashMap<String, Object> app_map = new HashMap<>();
@@ -218,6 +240,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                                     app_map.put("time", app_time);
                                     app_map.put("selfAttendee", self_name);
                                     app_map.put("otherAttendee", other_attendee_name);
+                                    app_map.put("address", targetAddress);
 
 
                                     mDatabase.updateChildren(app_map).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -258,7 +281,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                                                 intent.putExtra("APPOINTMENT_TIME",app_time);
                                                 intent.putExtra("APPOINTMENT_TARGET", target_name);
                                                 intent.putExtra("USER_EMAIL",myEmail );
-                                                intent.putExtra("ADDRESS",myAddress );
+                                                intent.putExtra("ADDRESS",targetAddress );
                                                 intent.putExtra("REASON",reason );
                                                 startActivity(intent);
                                                 finish();
