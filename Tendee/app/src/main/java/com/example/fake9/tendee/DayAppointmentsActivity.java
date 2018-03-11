@@ -65,7 +65,7 @@ public class DayAppointmentsActivity extends AppCompatActivity {
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_id = mCurrentUser.getUid();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_id).child("week").child(day);
-        mUserDatabase.addValueEventListener(new ValueEventListener() {
+        mUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 daySchedule = (ArrayList<Long>)dataSnapshot.getValue();
@@ -141,7 +141,16 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                             k = k + 1;
                         }
                         endIndexes.add(k);
-                    } else if (daySchedule.get(i) > 1) {
+                        i = k;
+                    } /*else if (daySchedule.get(i) > 1) {
+                        //Toast.makeText(DayAppointmentsActivity.this, "hi", Toast.LENGTH_SHORT).show();
+                        Log.d("LMAO","LMAO"+i+"--"+daySchedule.get(i));
+                        apptindex.add(i);
+                        apptnumber.add(daySchedule.get(i));
+                    }*/
+                }
+                for (int i = 0; i < daySchedule.size(); i++) {
+                    if (daySchedule.get(i) > 1) {
                         //Toast.makeText(DayAppointmentsActivity.this, "hi", Toast.LENGTH_SHORT).show();
                         Log.d("LMAO","LMAO"+i+"--"+daySchedule.get(i));
                         apptindex.add(i);
@@ -223,7 +232,7 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String result = String.valueOf(adapterView.getItemAtPosition(i));
                         if (result.contains("Free")) {
-                            Toast.makeText(DayAppointmentsActivity.this, "no more details", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DayAppointmentsActivity.this, "No further details", Toast.LENGTH_SHORT).show();
                             return;
                         } else {
                             int start = result.indexOf('-');
@@ -231,7 +240,7 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                             Log.d("oi", "onItemClick: "+start);
                             Log.d("oi", "onItemClick: "+end);
                             String newstring = result.substring((start+1),end);
-                            Toast.makeText(DayAppointmentsActivity.this, newstring, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(DayAppointmentsActivity.this, newstring, Toast.LENGTH_SHORT).show();
                             Intent apptdetails = new Intent(DayAppointmentsActivity.this,AppointmentDetailsActivity.class);
                             apptdetails.putExtra("apptnum",newstring);
                             startActivity(apptdetails);

@@ -131,6 +131,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
 
                     }
                 });
+                Toast.makeText(ScheduleActivity.this, "Free time has been set", Toast.LENGTH_SHORT).show();
             }
         });
         busyBtn.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +186,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
 
                     }
                 });
-
+                Toast.makeText(ScheduleActivity.this, "Busy time has been set", Toast.LENGTH_SHORT).show();
             }
         });
     }

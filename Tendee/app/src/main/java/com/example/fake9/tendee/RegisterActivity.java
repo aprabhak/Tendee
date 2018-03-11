@@ -194,9 +194,9 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(RegisterActivity.this, "worked", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "verification email has been sent", Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(RegisterActivity.this, "error", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "verification email could not be sent", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -220,7 +220,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 } else {
                     Log.w("mytag", "createUserWithEmail:failure", task.getException());
-                    Toast.makeText(RegisterActivity.this, "You got some error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Account could not be created", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -79,9 +79,9 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(LoginActivity.this, "Reset password worked", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Password has been reset", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Reset password failed", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Password could not be reset.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
                     if (!current_user.isEmailVerified()) {
-                        Toast.makeText(LoginActivity.this, "verify email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Please verify your email address", Toast.LENGTH_SHORT).show();
                         FirebaseAuth.getInstance().signOut();
                         return;
                     }
@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(mainIntent);
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "didnt work", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
                 }
 
             }
