@@ -64,6 +64,8 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
         addressdisplay.setMovementMethod(new ScrollingMovementMethod());
 
         apptdatabase = FirebaseDatabase.getInstance().getReference().child("Appointments").child(apptnum);
+//        Toast.makeText(AppointmentDetailsActivity.this, "apptnum is "+apptnum, Toast.LENGTH_SHORT).show();
+
         apptdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -223,7 +223,8 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                         int temp = index + 1;
                         time = index+":30" + " to "+temp+":00";
                     }
-                    String apptString = "Appointment: between "+time;
+
+                    String apptString = "Appointment ID-"+apptnum+":Between"+time;
                     timeIntervals.add(apptString);
                 }
                 Log.d("timeintervals", "onDataChange: "+timeIntervals.toString());
@@ -244,7 +245,7 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                             Log.d("oi", "onItemClick: "+start);
                             Log.d("oi", "onItemClick: "+end);
                             String newstring = result.substring((start+1),end);
-                            //Toast.makeText(DayAppointmentsActivity.this, newstring, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(DayAppointmentsActivity.this, "newstring"+result, Toast.LENGTH_SHORT).show();
                             Intent apptdetails = new Intent(DayAppointmentsActivity.this,AppointmentDetailsActivity.class);
                             apptdetails.putExtra("apptnum",newstring);
                             startActivity(apptdetails);
