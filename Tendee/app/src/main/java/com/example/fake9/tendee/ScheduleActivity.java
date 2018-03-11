@@ -78,13 +78,19 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                 int endMin = endTime.getCurrentMinute();
                 //Log.d("hour", "onClick: "+startHour);
                 //Log.d("minute", "onClick: "+startMin);
-                if (startHour < 8 || startHour > 17 || endHour < 8 || endHour > 17) {
+                if (startHour <= 8 || startHour > 17 || endHour <= 8 || endHour > 17) {
                     Toast.makeText(ScheduleActivity.this, "invalid time", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (startHour > endHour) {
                     Toast.makeText(ScheduleActivity.this, "impossible time", Toast.LENGTH_SHORT).show();
                     return;
+                }
+                if (startHour == endHour) {
+                    if (startMin > endMin) {
+                        Toast.makeText(ScheduleActivity.this, "Start time greater than end time", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
                 startIndex = (startHour - 9) * 2;
                 if (startMin >=30) {
