@@ -65,7 +65,7 @@ public class DayAppointmentsActivity extends AppCompatActivity {
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_id = mCurrentUser.getUid();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_id).child("week").child(day);
-        mUserDatabase.addValueEventListener(new ValueEventListener() {
+        mUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 daySchedule = (ArrayList<Long>)dataSnapshot.getValue();
