@@ -3,6 +3,7 @@ package com.example.fake9.tendee;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -32,11 +33,17 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
     private DatabaseReference apptdatabase;
     private DatabaseReference userdatabase;
     private Button deletebtn;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appointment_details);
+
+        /*mToolbar = (Toolbar)findViewById(R.id.appt_details_toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Appointment Details");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);*/
 
         Intent myIntent = getIntent();
         apptnum = myIntent.getStringExtra("apptnum");
@@ -168,6 +175,8 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
                                 Toast.makeText(AppointmentDetailsActivity.this, "FAILED", Toast.LENGTH_SHORT).show();
                             }
                         });
+                        Intent mainIntent = new Intent(AppointmentDetailsActivity.this,MainActivity.class);
+                        startActivity(mainIntent);
                     }
                 });
 

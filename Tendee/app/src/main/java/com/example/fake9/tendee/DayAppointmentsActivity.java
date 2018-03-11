@@ -223,7 +223,7 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         String result = String.valueOf(adapterView.getItemAtPosition(i));
                         if (result.contains("Free")) {
-                            Toast.makeText(DayAppointmentsActivity.this, "no more details", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DayAppointmentsActivity.this, "No further details", Toast.LENGTH_SHORT).show();
                             return;
                         } else {
                             int start = result.indexOf('-');
@@ -231,7 +231,7 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                             Log.d("oi", "onItemClick: "+start);
                             Log.d("oi", "onItemClick: "+end);
                             String newstring = result.substring((start+1),end);
-                            Toast.makeText(DayAppointmentsActivity.this, newstring, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(DayAppointmentsActivity.this, newstring, Toast.LENGTH_SHORT).show();
                             Intent apptdetails = new Intent(DayAppointmentsActivity.this,AppointmentDetailsActivity.class);
                             apptdetails.putExtra("apptnum",newstring);
                             startActivity(apptdetails);
