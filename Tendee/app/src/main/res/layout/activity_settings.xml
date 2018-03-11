@@ -7,46 +7,80 @@
     android:background="@color/colorPrimaryDark"
     tools:context="com.example.fake9.tendee.SettingsActivity">
 
-    <TextView
-        android:id="@+id/settings_display_name"
+    <ImageView
+        android:id="@+id/imageView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/imageView10"
+        android:layout_alignTop="@+id/settings_description"
+        app:srcCompat="@drawable/desc" />
+
+    <ImageView
+        android:id="@+id/imageView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/imageView9"
+        android:layout_alignTop="@+id/settings_address"
+        app:srcCompat="@drawable/address" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/settings_email"
+        android:layout_alignStart="@+id/imageView8"
+        app:srcCompat="@drawable/email" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView7"
+        android:layout_marginEnd="14dp"
+        android:layout_marginTop="98dp"
+        android:layout_toStartOf="@+id/settings_display_name"
+        app:srcCompat="@drawable/name1" />
+
+    <TextView
+        android:id="@+id/settings_display_name"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView8"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="119dp"
         android:text="Name"
         android:textColor="@android:color/white"
         android:textSize="30sp" />
 
     <TextView
         android:id="@+id/settings_email"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/settings_display_name"
         android:layout_below="@+id/settings_display_name"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="61dp"
+        android:layout_marginTop="28dp"
         android:text="Email"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/settings_description"
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/settings_email"
-        android:layout_marginTop="62dp"
-        android:layout_centerHorizontal="true"
+        android:layout_alignStart="@+id/settings_address"
+        android:layout_below="@+id/imageView10"
+        android:layout_marginTop="50dp"
+        android:maxLines="11"
+        android:scrollbars="vertical"
         android:text="Decription"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
 
     <TextView
         android:id="@+id/settings_address"
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/settings_description"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_alignStart="@+id/settings_email"
+        android:layout_alignTop="@+id/settings_edit_address"
         android:text="Address"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
@@ -56,19 +90,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/settings_description"
-        android:layout_marginStart="37dp"
-        android:layout_toEndOf="@+id/settings_description"
-        android:layout_centerHorizontal="true"
+        android:layout_alignStart="@+id/settings_edit_address"
         android:drawableStart="@drawable/ic_mode_edit_white_18dp" />
 
     <TextView
         android:id="@+id/settings_edit_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/settings_address"
-        android:layout_marginStart="37dp"
-        android:layout_toEndOf="@+id/settings_address"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/settings_email"
+        android:layout_marginTop="41dp"
+        android:layout_toEndOf="@+id/settings_email"
         android:drawableStart="@drawable/ic_mode_edit_white_18dp" />
 
     <Button
@@ -81,4 +112,13 @@
         android:backgroundTint="@color/colorAccent"
         android:text="Change Password"
         android:textColor="@android:color/black" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        app:srcCompat="@drawable/pro" />
 </RelativeLayout>

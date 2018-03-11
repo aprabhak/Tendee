@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
         mEditDescription = (TextView)findViewById(R.id.settings_edit_description);
         mEditAddress = (TextView)findViewById(R.id.settings_edit_address);
         mEditPassword = (Button)findViewById(R.id.EditPassBtn);
-
+        mDescription.setMovementMethod(new ScrollingMovementMethod());
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = mCurrentUser.getUid();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);

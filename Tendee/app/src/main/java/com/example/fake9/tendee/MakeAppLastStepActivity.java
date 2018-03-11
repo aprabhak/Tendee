@@ -105,8 +105,12 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
 //                dataSnapshot.child("week").child(date).child(index).getRef().setValue(randomNum);
 
 
-                attendee_list = other_attendee_name + ", " + self_name;
-                display_attendee.setText(attendee_list);
+                if (other_attendee_name.equals(" ")) {
+                    attendee_list=self_name;
+                }else {
+                    attendee_list = other_attendee_name + ", " + self_name;
+                }
+                    display_attendee.setText(attendee_list);
 
             }
 
@@ -125,6 +129,15 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
             public void onClick(View view) {
                 phone = input_phone.getText().toString();
                 reason = input_reason.getText().toString();
+                if (containsBadWords(reason)){
+                     Toast.makeText(MakeAppLastStepActivity.this,"Language!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (reason.equals("") || phone == null){
+                    Toast.makeText(MakeAppLastStepActivity.this,"Information Incomplete!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
 //                Toast.makeText(MakeAppLastStepActivity.this,
 //                        target_name+date+","+app_time+","+reason+","+phone, Toast.LENGTH_SHORT).show();
 
@@ -297,36 +310,12 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
         return index + "";
     }
 
-
-    public void Send(String ID)throws Exception{
-        Thread thread = new Thread(new Runnable(){
-            public void run() {
-                try {
-                    GMailSender m = new GMailSender("tendeecs408@gmail.com", "cs408tendee");
-
-                    String[] toArr = {"chaolun608@gmail.com", "shao90@purdue.edu"};
-                    m.setTo(toArr);
-                    m.setFrom("tendeecs408@gmail.com");
-                    m.setSubject("This is an email sent using my Mail JavaMail wrapper from an Android device.");
-                    m.setBody("Email body.");
-
-                    try {
-                        m.send();
-                    } catch(Exception e) {
-                        //Toast.makeText(MailApp.this, "There was a problem sending the email.", Toast.LENGTH_LONG).show();
-                        Log.e("MailApp", "Could not send email", e);
-                    }
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
-
-
-
+    public boolean containsBadWords(String str)
+    {
+        String word = str.toLowerCase();
+        if (word.contains("damn") || word.contains("shit") || word.contains("bitch") || word.contains("asshole") || word.contains("son of a bitch") || word.contains("shit hole") || word.contains("mother fucker") || word.contains("fucker") || word.contains("fuck") || word.contains("mother") || word.contains("god") || word.contains("ass") || word.contains("dick") || word.contains("suck"))
+            return true;
+        return false;
     }
 
 

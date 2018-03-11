@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Search_ResultActivity extends AppCompatActivity {
-    private Button mMakeappBtm;
+    private ImageButton mMakeappBtm;
     private Switch mBlockSwitch;
     private TextView mResName;
     private TextView mResDes;
@@ -52,9 +53,9 @@ public class Search_ResultActivity extends AppCompatActivity {
         mResDes = (TextView) findViewById(R.id.result_desc);
         mResAddress = (TextView) findViewById(R.id.result_address);
         mResEmail = (TextView) findViewById(R.id.result_email);
-        mMakeappBtm = (Button) findViewById(R.id.MkapmtBtm);
+        mMakeappBtm = (ImageButton) findViewById(R.id.MkapmtBtm);
         mBlockSwitch = (Switch) findViewById(R.id.block_switch);
-
+        mResDes.setMovementMethod(new ScrollingMovementMethod());
         mBlockSwitch.setTextOff("OFF");
         mBlockSwitch.setTextOn("ON");
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
