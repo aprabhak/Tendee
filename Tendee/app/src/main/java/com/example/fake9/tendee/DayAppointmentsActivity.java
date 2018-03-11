@@ -83,14 +83,16 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                         while (k <= 15 && daySchedule.get(k) == 1L) {
                             k = k + 1;
                         }
-                        endIndexes.add(k-1);
-                        i = k;
-                    } else if (daySchedule.get(i) != 0) {
+                        endIndexes.add(k);
+                    } else if (daySchedule.get(i) > 1) {
                         //Toast.makeText(DayAppointmentsActivity.this, "hi", Toast.LENGTH_SHORT).show();
+                        Log.d("LMAO","LMAO"+i+"--"+daySchedule.get(i));
                         apptindex.add(i);
                         apptnumber.add(daySchedule.get(i));
                     }
                 }
+
+                Log.d("appointmentnumbers", "onDataChange: "+apptnumber.toString());
                 Log.d("startindexes", "onDataChange: "+startIndexes.toString());
                 Log.d("endindexes", "onDataChange: "+endIndexes.toString());
                 int starthour = 0;
@@ -140,38 +142,19 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                 for (int j = 0; j < apptindex.size(); j++) {
                     int index = apptindex.get(j);
                     long apptnum = apptnumber.get(j);
-                    String time;
+                    String time = "";
                     if (index == 0) {
                         time = "9:00 to 9:30";
                     } else if (index % 2 == 0) {
                         index = 9 + (index / 2);
                         time = index+ ":00" + " to "+index+":30";
-                    } else {
+                    } else if (index % 2 != 0) {
                         index = 9 + (index / 2);
                         int temp = index + 1;
                         time = index+":30" + " to "+temp;
                     }
                     String apptString = "appointment-"+apptnum+":"+time;
                     timeIntervals.add(apptString);
-                    /*String appnumString = Long.toString(apptnum);
-                    if (daySchedule != null) {
-                        mApptDatabase = FirebaseDatabase.getInstance().getReference().child("Appointments").child(appnumString);
-                        mApptDatabase.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                String name = dataSnapshot.child("targetName").getValue().toString();
-                                Toast.makeText(DayAppointmentsActivity.this, name, Toast.LENGTH_SHORT).show();
-                                timeIntervals.add(name);
-                                semaphore.release();
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-                    } */
-
                 }
                 Log.d("timeintervals", "onDataChange: "+timeIntervals.toString());
                 listAdapter = new ArrayAdapter<String>(DayAppointmentsActivity.this,android.R.layout.simple_list_item_1,timeIntervals);
