@@ -23,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.Semaphore;
 
@@ -63,6 +65,61 @@ public class DayAppointmentsActivity extends AppCompatActivity {
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_id = mCurrentUser.getUid();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_id).child("week").child(day);
+        mUserDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                daySchedule = (ArrayList<Long>)dataSnapshot.getValue();
+                Date now = Calendar.getInstance().getTime();
+                int nowday = now.getDay();
+                int nowhour = now.getHours();
+                int nowmin = now.getMinutes();
+                int nowindex = 0;
+                String nowdayString = "";
+                if (nowday == 0) {
+                    nowdayString = "Sunday";
+                }
+                if (nowday == 1) {
+                    nowdayString = "Monday";
+                }
+                if (nowday == 2) {
+                    nowdayString = "Tuesday";
+                }
+                if (nowday == 3) {
+                    nowdayString = "Wednesday";
+                }
+                if (nowday == 4) {
+                    nowdayString = "Thursday";
+                }
+                if (nowday == 5) {
+                    nowdayString = "Friday";
+                }
+                if (nowday == 6) {
+                    nowdayString = "Saturday";
+                }
+                Log.d("now", "onDataChange: "+nowhour);
+                //nowdayString = "Monday";
+                if (nowdayString.equals(day)) {
+                    nowindex = (nowhour - 9) * 2;
+                    if (nowmin >=30) {
+                        nowindex = nowindex + 1;
+                    }
+                    if (nowhour  < 9 || nowhour > 17) {
+                        nowindex = 0;
+                    }
+                    //nowindex = 2;
+                    for (int x = 0; x < nowindex; x++) {
+                        daySchedule.set(x,0L);
+                    }
+                    mUserDatabase.setValue(daySchedule);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         mUserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

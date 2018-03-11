@@ -33,9 +33,9 @@
         android:id="@+id/settings_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/settings_display_name"
         android:layout_below="@+id/settings_email"
         android:layout_marginTop="62dp"
+        android:layout_centerHorizontal="true"
         android:text="Decription"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
@@ -58,6 +58,7 @@
         android:layout_alignBottom="@+id/settings_description"
         android:layout_marginStart="37dp"
         android:layout_toEndOf="@+id/settings_description"
+        android:layout_centerHorizontal="true"
         android:drawableStart="@drawable/ic_mode_edit_white_18dp" />
 
     <TextView
@@ -65,7 +66,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/settings_address"
-        android:layout_alignStart="@+id/settings_edit_description"
+        android:layout_marginStart="37dp"
+        android:layout_toEndOf="@+id/settings_address"
+        android:layout_centerHorizontal="true"
         android:drawableStart="@drawable/ic_mode_edit_white_18dp" />
 
     <Button
