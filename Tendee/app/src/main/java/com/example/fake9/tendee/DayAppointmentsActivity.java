@@ -141,7 +141,16 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                             k = k + 1;
                         }
                         endIndexes.add(k);
-                    } else if (daySchedule.get(i) > 1) {
+                        i = k;
+                    } /*else if (daySchedule.get(i) > 1) {
+                        //Toast.makeText(DayAppointmentsActivity.this, "hi", Toast.LENGTH_SHORT).show();
+                        Log.d("LMAO","LMAO"+i+"--"+daySchedule.get(i));
+                        apptindex.add(i);
+                        apptnumber.add(daySchedule.get(i));
+                    }*/
+                }
+                for (int i = 0; i < daySchedule.size(); i++) {
+                    if (daySchedule.get(i) > 1) {
                         //Toast.makeText(DayAppointmentsActivity.this, "hi", Toast.LENGTH_SHORT).show();
                         Log.d("LMAO","LMAO"+i+"--"+daySchedule.get(i));
                         apptindex.add(i);
