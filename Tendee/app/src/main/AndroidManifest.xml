@@ -45,6 +45,7 @@
         <activity android:name=".Add_attendeeActivity" />
         <activity android:name=".Result_AttendeeActivity" />
         <activity android:name=".MakeAppLastStepActivity" />
+        <activity android:name=".LastEmptyActivity" />
         <activity android:name=".AppointmentDetailsActivity"></activity>
     </application>
 

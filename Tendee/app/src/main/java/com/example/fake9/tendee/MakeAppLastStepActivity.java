@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +39,8 @@ import java.util.Properties;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static java.lang.Thread.sleep;
+
 
 public class MakeAppLastStepActivity extends AppCompatActivity {
     private DatabaseReference mUserDatabase;
@@ -62,12 +65,15 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
     public String app_time = "empty";
     public String reason;
     public String phone;
+    public String myEmail;
+    public String myAddress;
     final int randomNum = (int) ((Math.random() * ((900000000 - 100000000) + 1)) + 100000000);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_app_last_step);
+
 
 
         display_date = findViewById(R.id.date_display);
@@ -81,6 +87,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
         other_attendee_name = getIntent().getStringExtra("ATTENDEE_NAME");
         target_name = getIntent().getStringExtra("APPOINTMENT_TARGET");
 
+
 //        Toast.makeText(MakeAppLastStepActivity.this,"target_name"+target_name, Toast.LENGTH_SHORT).show();
 
 
@@ -93,21 +100,10 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                 //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
                 String index = parseTime(app_time);
                 self_name = dataSnapshot.child("name").getValue().toString();
+                myEmail=dataSnapshot.child("email").getValue().toString();
+                myAddress = dataSnapshot.child("address").getValue().toString();
 //                dataSnapshot.child("week").child(date).child(index).getRef().setValue(randomNum);
 
-                /**          if(Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString())!=0 &&
-                 Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString())!=1){
-
-                 Toast.makeText(MakeAppLastStepActivity.this, "You are not free bro"+
-                 Integer.parseInt(dataSnapshot.child("week").child(date).child(index).getValue().toString()), Toast.LENGTH_SHORT).show();
-
-                 SystemClock.sleep(1000);
-
-                 Intent intent = new Intent(MakeAppLastStepActivity.this, MainActivity.class);
-                 startActivity(intent);
-
-                 finish();
-                 }*/
 
                 attendee_list = other_attendee_name + ", " + self_name;
                 display_attendee.setText(attendee_list);
@@ -238,13 +234,22 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                                                 }
 
 
+
                                                 Toast.makeText(MakeAppLastStepActivity.this, "SUCCESS" , Toast.LENGTH_SHORT).show();
 
-                                                Intent intent = new Intent(MakeAppLastStepActivity.this, MainActivity.class);
+                                                Intent intent = new Intent(MakeAppLastStepActivity.this, LastEmptyActivity.class);
 //                            registerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
+                                                intent.putExtra("ATTENDEE_NAME", self_name+"      "+other_attendee_name);
+                                                intent.putExtra("APPOINTMENT_DATE", date);
+                                                intent.putExtra("APPOINTMENT_TIME",app_time);
+                                                intent.putExtra("APPOINTMENT_TARGET", target_name);
+                                                intent.putExtra("USER_EMAIL",myEmail );
+                                                intent.putExtra("ADDRESS",myAddress );
+                                                intent.putExtra("REASON",reason );
                                                 startActivity(intent);
                                                 finish();
+
                                             }
                                         }
                                     });
@@ -293,42 +298,36 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
     }
 
 
-//    public void Send(String ID)throws Exception{
-//        Toast.makeText(MakeAppLastStepActivity.this,"Sending message...", Toast.LENGTH_SHORT).show();
-//        Properties prop = new Properties();
-//        prop.setProperty("mail.host", Outlook_MailServer);
-//        prop.setProperty("mail.transport.protocol", "smtp");
-//        prop.setProperty("mail.smtp.auth", "true");
-//        prop.put("mail.smtp.port", Mail_Port);
-//
-//        prop.put("mail.smtp.starttls.enable", "true");
-//
-//        Session session = Session.getInstance(prop);
-//        //Set debug to true to open debug
-//        session.setDebug(false);
-//
-//        Transport ts = session.getTransport();
-//
-//        ts.connect(Outlook_MailServer, Admin_Address, Admin_Password);
-//
-//
-//        MimeMessage message = new MimeMessage(session);
-//
-//        message.setFrom(new InternetAddress(Admin_Address));
-//
-//        message.setRecipient(Message.RecipientType.TO, new InternetAddress("shao90@purdue.com"));
-//
-//        message.setSubject("Appointment Confirmation");
-//        message.setContent("Mail test, don't reply Hello \""+target_name+"\" <br/> <br/> Tendee_Team", "text/html;charset=UTF-8");
-//
-//
-//        ts.sendMessage(message, message.getAllRecipients());
-//
-//        ts.close();
-//        // System.out.println("SUCCESS");
-//
-//
-//    }
+    public void Send(String ID)throws Exception{
+        Thread thread = new Thread(new Runnable(){
+            public void run() {
+                try {
+                    GMailSender m = new GMailSender("tendeecs408@gmail.com", "cs408tendee");
+
+                    String[] toArr = {"chaolun608@gmail.com", "shao90@purdue.edu"};
+                    m.setTo(toArr);
+                    m.setFrom("tendeecs408@gmail.com");
+                    m.setSubject("This is an email sent using my Mail JavaMail wrapper from an Android device.");
+                    m.setBody("Email body.");
+
+                    try {
+                        m.send();
+                    } catch(Exception e) {
+                        //Toast.makeText(MailApp.this, "There was a problem sending the email.", Toast.LENGTH_LONG).show();
+                        Log.e("MailApp", "Could not send email", e);
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+
+
+
+    }
 
 
 
