@@ -45,6 +45,7 @@ import static java.lang.Thread.sleep;
 public class MakeAppLastStepActivity extends AppCompatActivity {
     private DatabaseReference mUserDatabase;
     private FirebaseUser mCurrentUser;
+    private DatabaseReference maddressdatabase;
     private DatabaseReference mDatabase;
     private static final String Admin_Address = "tendee408@outlook.com";
     private static final String Admin_Password = "cs408tendee";
@@ -120,6 +121,41 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
 
             }
         });
+        maddressdatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        Query query = maddressdatabase.orderByChild("name").equalTo(target_name);//ok
+//        Toast.makeText(MakeAppLastStepActivity.this, "targetAddress----- is"+target_name, Toast.LENGTH_SHORT).show();
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Toast.makeText(Search_ResultActivity.this, Long.toString(dataSnapshot.getChildrenCount()), Toast.LENGTH_SHORT).show();
+                for (DataSnapshot childSnapshot : dataSnapshot.getChildren()) {
+
+
+                        targetAddress= childSnapshot.child("address").getValue().toString();
+//                        Toast.makeText(MakeAppLastStepActivity.this, "targetAddress is"+targetAddress, Toast.LENGTH_SHORT).show();
+                        return;
+//                        break;
+
+
+                }
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(MakeAppLastStepActivity.this, "FAILED", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+//        for (DataSnapshot data1 : dataSnapshot.getChildren()) {
+//            if (data1.child("name").getValue().equals(target_name)) {
+//                //do ur stuff
+//                targetAddress = data.child("address").getValue().toString();
+//                Toast.makeText(MakeAppLastStepActivity.this,"target is "+targetAddress, Toast.LENGTH_SHORT).show();
+//
+//            }
+//        }
+
 
 
         display_date.setText(date);
@@ -221,14 +257,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                                         });
                                     }
 
-                                    for (DataSnapshot data1 : dataSnapshot.getChildren()) {
-                                        if (data1.child("name").getValue().equals(target_name)) {
-                                            //do ur stuff
-                                            targetAddress = data.child("address").getValue().toString();
 
-
-                                        }
-                                    }
 //                                    Toast.makeText(MakeAppLastStepActivity.this,"target is "+targetAddress, Toast.LENGTH_SHORT).show();
                                     mDatabase = FirebaseDatabase.getInstance().getReference().child("Appointments").child(randomNum + "");
 
