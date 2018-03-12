@@ -133,8 +133,8 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
 
                         targetAddress= childSnapshot.child("address").getValue().toString();
 //                        Toast.makeText(MakeAppLastStepActivity.this, "targetAddress is"+targetAddress, Toast.LENGTH_SHORT).show();
-                        return;
-//                        break;
+
+                        break;
 
 
                 }
