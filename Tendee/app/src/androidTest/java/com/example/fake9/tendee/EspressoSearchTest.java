@@ -124,7 +124,7 @@ public class EspressoSearchTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        //comment
         ViewInteraction appCompatEditText = onView(
                 allOf(withId(R.id.Search_Input),
                         childAtPosition(
