@@ -86,9 +86,11 @@ public class Add_attendeeActivity extends AppCompatActivity {
                 //   String name = mSearchName.getEditText().getText().toString();
 
                 String name = mSearchName.getText().toString();
-                if(name.length() > 3)
+                if(name.length() >= 2){
                     search_User(name);
-
+                }else{
+                    Toast.makeText(Add_attendeeActivity.this,"Not Enough Information", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

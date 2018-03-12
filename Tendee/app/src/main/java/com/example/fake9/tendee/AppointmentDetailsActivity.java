@@ -78,20 +78,36 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
                 final String TargetName = dataSnapshot.child("targetName").getValue().toString();
                 final String Time = dataSnapshot.child("time").getValue().toString();
                 final String Address = dataSnapshot.child("address").getValue().toString();
-                String attendee_list;
-                apptdate.setText(Date);
-                addressdisplay.setText(Address);
-                phonenum.setText(Phonenum);
-                reason.setText(Reason);
-                if (OtherAttendee.equals(" ")) {
-                    selfattendee.setText(SelfAttendee);
-                } else {
-                    attendee_list = SelfAttendee + ", " + OtherAttendee;
-                    selfattendee.setText(attendee_list);
-                }
-                targetname.setText(TargetName);
-                timeview.setText(Time);
 
+                    String display_date="Date: ";
+                    display_date+=Date;
+                    apptdate.setText(display_date);
+
+                    String display_time="Time: ";
+                    display_time+=Time;
+                    timeview.setText(display_time);
+
+                    String display_targetname="With: ";
+                    display_targetname+=TargetName;
+                    targetname.setText(display_targetname);
+
+                    String display_phone="Contact Number: ";
+                    display_phone+=Phonenum;
+                    phonenum.setText(display_phone);
+
+                    String display_address="Location:\n  ";
+                    display_address+=Address;
+                    addressdisplay.setText(display_address);
+
+                    String display_reason="Comments:\n  ";
+                    display_reason+=Reason;
+                    reason.setText(display_reason);
+
+                    String display_attendee="Attendee:\n  ";
+                    display_attendee+=SelfAttendee;
+                    if (!OtherAttendee.equals(" "))
+                        display_attendee=display_attendee+", "+OtherAttendee;
+                    selfattendee.setText(display_attendee);
                 deletebtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

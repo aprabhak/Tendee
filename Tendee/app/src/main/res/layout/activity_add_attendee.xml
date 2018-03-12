@@ -12,7 +12,8 @@
         android:layout_height="51dp"
         android:layout_alignBottom="@+id/name_Input"
         android:layout_toEndOf="@+id/H_Label"
-        app:srcCompat="@android:drawable/ic_search_category_default" />
+        android:background="@color/common_google_signin_btn_text_dark_pressed"
+        app:srcCompat="@drawable/search" />
 
     <TextView
         android:id="@+id/H_Label"
@@ -47,6 +48,7 @@
         android:layout_below="@+id/H_Label"
         android:layout_marginStart="16dp"
         android:layout_marginTop="22dp"
+        android:hint="Search by Name"
         android:ems="10"
         android:inputType="textPersonName" />
 

@@ -12,7 +12,8 @@
         android:layout_height="51dp"
         android:layout_alignTop="@+id/Search_Input"
         android:layout_toEndOf="@+id/H_Label"
-        app:srcCompat="@android:drawable/ic_search_category_default" />
+        android:backgroundTint="@color/common_google_signin_btn_text_dark_default"
+        app:srcCompat="@drawable/search" />
 
     <TextView
         android:id="@+id/H_Label"
@@ -30,11 +31,12 @@
         android:textSize="30sp" />
 
     <view
-        class="android.support.v7.widget.RecyclerView"
         android:id="@+id/result_list"
+        class="android.support.v7.widget.RecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/Search_Input" />
 
     <EditText
