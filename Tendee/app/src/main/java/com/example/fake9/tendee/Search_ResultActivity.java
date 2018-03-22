@@ -55,7 +55,7 @@ public class Search_ResultActivity extends AppCompatActivity {
         mResEmail = (TextView) findViewById(R.id.result_email);
         mMakeappBtm = (ImageButton) findViewById(R.id.MkapmtBtm);
         mBlockSwitch = (Switch) findViewById(R.id.block_switch);
-        mResDes.setMovementMethod(new ScrollingMovementMethod());
+//        mResDes.setMovementMethod(new ScrollingMovementMethod());
         mBlockSwitch.setTextOff("OFF");
         mBlockSwitch.setTextOn("ON");
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -88,7 +88,7 @@ public class Search_ResultActivity extends AppCompatActivity {
 
 
                                     if (data.getValue().toString().equals(res_user_email)) {
-                                        mBlockSwitch.setChecked(true);
+//                                        mBlockSwitch.setChecked(true);
                                     }
 
                                 }

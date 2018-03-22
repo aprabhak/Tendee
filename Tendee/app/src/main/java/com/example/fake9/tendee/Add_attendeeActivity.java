@@ -139,8 +139,7 @@ public class Add_attendeeActivity extends AppCompatActivity {
                                          public void onClick(View view) {
                                              TextView user_name = (TextView) mview.findViewById(R.id.name_text);
 
-                                             if (!user_name.getText().equals(app.target_name) &&
-                                                     !user_name.getText().equals(SearchActivity.sea.name_currentUser)) {
+                                             if (!user_name.getText().equals(SearchActivity.sea.name_currentUser)) {
                                                  Context context = view.getContext();
                                                  Intent intent = new Intent(context, MakeAppLastStepActivity.class);
 

@@ -98,7 +98,7 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
 
             @Override
             public void onClick(View view) {
-                if(app_time!=null){
+//                if(app_time!=null){
                 mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
                 final String current_uid = mCurrentUser.getUid();
                 mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
@@ -144,9 +144,9 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
 //                Toast.makeText(Make_AppointmentActivity.this, "time is" + app_time + "date is ~" + date, Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 finish();
-                }else{
-                    Toast.makeText(Make_AppointmentActivity.this, "Please Choose Time!!", Toast.LENGTH_SHORT).show();
-                }
+//                }else{
+//                    Toast.makeText(Make_AppointmentActivity.this, "Please Choose Time!!", Toast.LENGTH_SHORT).show();
+//                }
 
             }
 

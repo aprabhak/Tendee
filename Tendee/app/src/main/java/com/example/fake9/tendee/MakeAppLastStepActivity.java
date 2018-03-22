@@ -174,10 +174,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                     Toast.makeText(MakeAppLastStepActivity.this,"Information Incomplete!",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (reason.length()>60){
-                    Toast.makeText(MakeAppLastStepActivity.this,"No more than 60 characters",Toast.LENGTH_SHORT).show();
-                    return;
-                }
+
                 if (phone.length()>15){
                     Toast.makeText(MakeAppLastStepActivity.this,"No more than 15 numbers",Toast.LENGTH_SHORT).show();
                     return;
@@ -302,7 +299,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
 
                                                 Toast.makeText(MakeAppLastStepActivity.this, "SUCCESS" , Toast.LENGTH_SHORT).show();
 
-                                                Intent intent = new Intent(MakeAppLastStepActivity.this, LastEmptyActivity.class);
+                                                Intent intent = new Intent(MakeAppLastStepActivity.this, MainActivity.class);
 //                            registerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                                                 intent.putExtra("ATTENDEE_NAME", self_name+"      "+other_attendee_name);
@@ -312,6 +309,44 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                                                 intent.putExtra("USER_EMAIL",myEmail );
                                                 intent.putExtra("ADDRESS",targetAddress );
                                                 intent.putExtra("REASON",reason );
+
+                                                Thread thread = new Thread(new Runnable(){
+                                                    public void run() {
+                                                        try {
+
+                                                            GMailSender m = new GMailSender("tendeecs408@gmail.com", "cs408tendee");
+
+                                                            String[] toArr = {"chaolun608@gmail.com"};
+                                                            m.setTo(new String[]{myEmail});
+                                                            m.setFrom("tendeecs408@gmail.com");
+                                                            m.setSubject("Appointment Reminder");
+                                                            m.setBody("This is to remind you that an appointment has been scheduled.\n\n" +
+                                                                    "Date: This "+date+"\n"+
+                                                                    "Time: "+app_time+"\n"+
+                                                                    "With: "+target_name+"\n"+
+                                                                    "Attendee: "+self_name+"      "+other_attendee_name+"\n"+
+                                                                    "Location: "+targetAddress+"\n"+
+                                                                    "Comments: "+reason+"\n"+
+                                                                    "\n\n"+
+                                                                    "Tendee Team");
+
+
+                                                            try {
+                                                                m.send();
+
+                                                            } catch (Exception e) {
+                                                                //Toast.makeText(MailApp.this, "There was a problem sending the email.", Toast.LENGTH_LONG).show();
+                                                                Log.e("MailApp", "Could not send email", e);
+                                                            }
+
+
+                                                        } catch (Exception e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                                thread.start();
+
                                                 startActivity(intent);
                                                 finish();
 
@@ -360,6 +395,10 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
         }
         index += (Integer.parseInt(res[0]) - 9) * 2;
         return index + "";
+    }
+
+    public void sendemail(){
+
     }
 
     public boolean containsBadWords(String str)
