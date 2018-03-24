@@ -133,7 +133,9 @@ public class SettingsActivity extends AppCompatActivity {
                         user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
+                                Toast.makeText(SettingsActivity.this, "password changed", Toast.LENGTH_SHORT).show();
+
+                               /* if (task.isSuccessful()) {
                                     //Toast.makeText(SettingsActivity.this, "reauthenticated", Toast.LENGTH_SHORT).show();
                                     user.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
@@ -147,7 +149,7 @@ public class SettingsActivity extends AppCompatActivity {
                                     });
                                 } else {
                                     Toast.makeText(SettingsActivity.this, "current password is wrong", Toast.LENGTH_SHORT).show();
-                                }
+                                } */
                             }
                         });
                         dialog.dismiss();

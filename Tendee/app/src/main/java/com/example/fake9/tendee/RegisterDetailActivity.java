@@ -131,7 +131,7 @@ public class RegisterDetailActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    FirebaseAuth.getInstance().signOut();
+                    //FirebaseAuth.getInstance().signOut();
                     Intent registerIntent = new Intent(RegisterDetailActivity.this,MainActivity.class);
                     registerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(registerIntent);

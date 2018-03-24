@@ -184,7 +184,7 @@ public class DayAppointmentsActivity extends AppCompatActivity {
                         endhour = 9 + (endhour / 2);
                     } else {
                         endhour = 9 + (endhour / 2);
-                        endmin = "30";
+                        //endmin = "30";
                     }
                     if (check1 == check2) {
                         if (check1 == 0) {
