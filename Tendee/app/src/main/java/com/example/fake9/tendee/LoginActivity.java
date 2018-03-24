@@ -78,11 +78,12 @@ public class LoginActivity extends AppCompatActivity {
                         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Password has been reset", Toast.LENGTH_SHORT).show();
+                               /* if (task.isSuccessful()) {
                                     Toast.makeText(LoginActivity.this, "Password has been reset", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(LoginActivity.this, "Password could not be reset.", Toast.LENGTH_SHORT).show();
-                                }
+                                } */
                             }
                         });
                         //dialog.dismiss();
