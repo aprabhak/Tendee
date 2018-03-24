@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             }
                         });
-                        dialog.dismiss();
+                        //dialog.dismiss();
                     }
                 });
             }
@@ -102,15 +102,15 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (task.isSuccessful()) {
                     FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
-                    if (!current_user.isEmailVerified()) {
+                    /*if (!current_user.isEmailVerified()) {
                         Toast.makeText(LoginActivity.this, "Please verify your email address", Toast.LENGTH_SHORT).show();
                         FirebaseAuth.getInstance().signOut();
                         return;
-                    }
+                    }*/
                     Intent mainIntent = new Intent(LoginActivity.this,MainActivity.class);
-                    mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    //mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(mainIntent);
-                    finish();
+                    //finish();
                 } else {
                     Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
                 }

@@ -79,7 +79,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent editIntent = new Intent(SettingsActivity.this,EditSettingsActivity.class);
-                editIntent.putExtra("edit","description");
+                editIntent.putExtra("edit","address");
                 startActivity(editIntent);
             }
         });
@@ -88,7 +88,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent editIntent = new Intent(SettingsActivity.this,EditSettingsActivity.class);
-                editIntent.putExtra("edit","address");
+                editIntent.putExtra("edit","description");
                 startActivity(editIntent);
             }
         });
@@ -112,11 +112,11 @@ public class SettingsActivity extends AppCompatActivity {
                         String currentPass = currentPassword.getText().toString();
                         final String newPass = newPassword.getText().toString();
                         String newPass2 = newPassword2.getText().toString();
-                        if (!newPass.equals(newPass2)) {
+                        /*if (!newPass.equals(newPass2)) {
                             Toast.makeText(SettingsActivity.this, "new passwords do not match", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                             return;
-                        }
+                        }*/
                         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         /*user.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override

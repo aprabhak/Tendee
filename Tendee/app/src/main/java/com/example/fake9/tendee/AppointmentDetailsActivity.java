@@ -205,8 +205,8 @@ public class AppointmentDetailsActivity extends AppCompatActivity {
                                 Toast.makeText(AppointmentDetailsActivity.this, "FAILED", Toast.LENGTH_SHORT).show();
                             }
                         });
-                        Intent mainIntent = new Intent(AppointmentDetailsActivity.this, MainActivity.class);
-                        startActivity(mainIntent);
+                        //Intent mainIntent = new Intent(AppointmentDetailsActivity.this, MainActivity.class);
+                        //startActivity(mainIntent);
                     }
                 });
 
