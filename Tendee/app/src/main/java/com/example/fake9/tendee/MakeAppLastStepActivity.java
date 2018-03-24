@@ -233,7 +233,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
 
 
                                 DataSnapshot a = data.child("week").child(date).child(index);
-                                if (other_attendee_name.equals(" ")|Integer.parseInt(a.getValue().toString()) == 1 || Integer.parseInt(a.getValue().toString()) == 0) {
+                                if (other_attendee_name.equals(" ")|Integer.parseInt(a.getValue().toString()) != -1) {
 
 
                                     if (!other_attendee_name.equals(" ")) {
@@ -288,9 +288,9 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                                                     if (data.child("name").getValue().equals(self_name)) {
                                                         //do ur stuff
                                                         DataSnapshot a = data.child("week").child(date).child(index);
-                                                        if (Integer.parseInt(a.getValue().toString()) == 1 || Integer.parseInt(a.getValue().toString()) == 0) {
+//                                                        if (Integer.parseInt(a.getValue().toString()) == 1 || Integer.parseInt(a.getValue().toString()) == 0) {
                                                             a.getRef().setValue(randomNum);
-                                                        }
+//                                                        }
 
                                                     }
                                                 }
@@ -355,7 +355,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                                     });
 
                                 } else {
-                                    Toast.makeText(MakeAppLastStepActivity.this, "Other Attendee is no free:" + a.getValue(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MakeAppLastStepActivity.this, "Other Attendee is no free:", Toast.LENGTH_SHORT).show();
 
                                     Intent intent = new Intent(MakeAppLastStepActivity.this, MainActivity.class);
 //                            registerIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

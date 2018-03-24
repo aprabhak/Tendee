@@ -99,6 +99,7 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
             @Override
             public void onClick(View view) {
 //                if(app_time!=null){
+      /**
                 mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
                 final String current_uid = mCurrentUser.getUid();
                 mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
@@ -130,7 +131,7 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
                     }
                 });
 
-
+*/
                 Intent intent = new Intent(Make_AppointmentActivity.this, MakeAppLastStepActivity.class);
 
                 intent.putExtra("ATTENDEE_NAME", " ");
