@@ -77,6 +77,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) { //executes when data retrieved.
                 //Toast.makeText(SettingsActivity.this, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
+               if (dataSnapshot.hasChild("name"))
                 sea.name_currentUser= dataSnapshot.child("name").getValue().toString();
 
             }

@@ -223,7 +223,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                     public void onDataChange(final DataSnapshot dataSnapshot) {
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
 //                                    Toast.makeText(MakeAppLastStepActivity.this,"i am in"+data.child("name").getValue(),Toast.LENGTH_SHORT).show();
-
+                            if (data.hasChild("name"))
                             if (data.child("name").getValue().equals(other_attendee_name) || other_attendee_name.equals(" ")) {
                                 //do ur stuff
 //                                Toast.makeText(MakeAppLastStepActivity.this, "i am in" + date, Toast.LENGTH_SHORT).show();
@@ -271,6 +271,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                                    if (data.hasChild("name"))
                                                     if (data.child("name").getValue().equals(target_name)) {
                                                         //do ur stuff
                                                         DataSnapshot a = data.child("week").child(date).child(index);
@@ -282,6 +283,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
                                                 }
 
                                                 for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                                    if (data.hasChild("name"))
                                                     if (data.child("name").getValue().equals(self_name)) {
                                                         //do ur stuff
                                                         DataSnapshot a = data.child("week").child(date).child(index);
