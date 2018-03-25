@@ -147,14 +147,14 @@ public class SearchActivity extends AppCompatActivity {
                                          @Override
                                          public void onClick(View view) {
                                              TextView user_name = (TextView) mview.findViewById(R.id.name_text);
-                                               if (!user_name.getText().equals(sea.name_currentUser)){
+
                                                  Context context = view.getContext();
                                                  Intent intent = new Intent(context, Search_ResultActivity.class);
 //                                             Toast.makeText(context, user_name.getText(), Toast.LENGTH_SHORT).show();
                                                  intent.putExtra("User_Name", user_name.getText());
                                                  context.startActivity(intent);
 
-                                             }
+
                                          }
                                      }
 
