@@ -102,6 +102,18 @@ public class RegisterDetailActivity extends AppCompatActivity {
         return true;
     }
     private void add_detail_to_user(String name, String description, String address) {
+        if (name.isEmpty()) {
+            Toast.makeText(this, "Please enter a valid name", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (description.isEmpty()) {
+            Toast.makeText(this, "Please enter a valid description", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (address.isEmpty()) {
+            Toast.makeText(this, "Please enter a valid address", Toast.LENGTH_SHORT).show();
+            return;
+        }
         FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = current_user.getUid();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);//.getReference points to root.

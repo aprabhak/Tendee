@@ -51,7 +51,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         mToolbar = (Toolbar)findViewById(R.id.schedule_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setTitle("Schedule");
+        getSupportActionBar().setTitle("Schedule");
 
         chooseDay = (Spinner)findViewById(R.id.chooseDay_spinner);
         chooseDay.setOnItemSelectedListener(this);
@@ -116,7 +116,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         newDay = ((ArrayList<Long>)dataSnapshot.getValue());
                         Log.d("newday", "onDataChange:"+newDay.toString());
-                        for (int i = startIndex; i < endIndex; i++) {
+                        for (int i = startIndex; i <= endIndex; i++) {
                             if (newDay.get(i) == 0) {
                                 newDay.set(i,1L);
                             }
