@@ -166,10 +166,7 @@ public class MakeAppLastStepActivity extends AppCompatActivity {
             public void onClick(View view) {
                 phone = input_phone.getText().toString();
                 reason = input_reason.getText().toString();
-                if (containsBadWords(reason)){
-                     Toast.makeText(MakeAppLastStepActivity.this,"Language!",Toast.LENGTH_SHORT).show();
-                    return;
-                }
+
                 if (reason.equals("") || phone == null){
                     Toast.makeText(MakeAppLastStepActivity.this,"Information Incomplete!",Toast.LENGTH_SHORT).show();
                     return;
