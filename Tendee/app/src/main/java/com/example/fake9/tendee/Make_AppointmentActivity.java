@@ -138,11 +138,14 @@ public class Make_AppointmentActivity extends AppCompatActivity implements Adapt
 
                 intent.putExtra("APPOINTMENT_DATE", date);
 
+                if(app_time==null)
+                    app_time="9:00";
+
                 intent.putExtra("APPOINTMENT_TIME", app_time);
 
                 intent.putExtra("APPOINTMENT_TARGET", target_user_name);
 
-//                Toast.makeText(Make_AppointmentActivity.this, "time is" + app_time + "date is ~" + date, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Make_AppointmentActivity.this, "time is" + app_time + "date is ~" + date, Toast.LENGTH_SHORT).show();
                 startActivity(intent);
                 finish();
 //                }else{
