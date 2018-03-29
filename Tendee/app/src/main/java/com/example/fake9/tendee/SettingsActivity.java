@@ -112,11 +112,11 @@ public class SettingsActivity extends AppCompatActivity {
                         String currentPass = currentPassword.getText().toString();
                         final String newPass = newPassword.getText().toString();
                         String newPass2 = newPassword2.getText().toString();
-                        /*if (!newPass.equals(newPass2)) {
+                        if (!newPass.equals(newPass2)) {
                             Toast.makeText(SettingsActivity.this, "new passwords do not match", Toast.LENGTH_SHORT).show();
                             dialog.dismiss();
                             return;
-                        }*/
+                        }
                         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         /*user.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -133,9 +133,9 @@ public class SettingsActivity extends AppCompatActivity {
                         user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(SettingsActivity.this, "password changed", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(SettingsActivity.this, "password changed", Toast.LENGTH_SHORT).show();
 
-                               /* if (task.isSuccessful()) {
+                                if (task.isSuccessful()) {
                                     //Toast.makeText(SettingsActivity.this, "reauthenticated", Toast.LENGTH_SHORT).show();
                                     user.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
@@ -149,7 +149,7 @@ public class SettingsActivity extends AppCompatActivity {
                                     });
                                 } else {
                                     Toast.makeText(SettingsActivity.this, "current password is wrong", Toast.LENGTH_SHORT).show();
-                                } */
+                                }
                             }
                         });
                         dialog.dismiss();

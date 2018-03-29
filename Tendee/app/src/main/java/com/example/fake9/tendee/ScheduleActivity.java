@@ -172,7 +172,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         newDay = ((ArrayList<Long>)dataSnapshot.getValue());
                         for (int i = startIndex; i <= endIndex; i++) {
-                            if (newDay.get(i) <= 1) {
+                            if (newDay.get(i) != 0) {
                                 newDay.set(i,0L);
                             }
 
